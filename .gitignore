@@ -8,8 +8,10 @@ Thumbs.db
 .project
 .*proj
 .svn/
+.idea/
 *.swp
 dist/
 node_modules/
 _build/
 attached/*
+
