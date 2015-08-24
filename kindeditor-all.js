@@ -6013,7 +6013,9 @@ _plugin('core', function(K) {
 					rng.select();
 					rng.execCommand('paste');
 					e.preventDefault();	
-				} catch (e) {}
+				} catch (e) {
+					return false;
+				}
 				
 			} else {
 				cmd.range.selectNodeContents(div[0]);
