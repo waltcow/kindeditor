@@ -67,6 +67,8 @@ grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-compress');
 
-grunt.registerTask('default', ['concat', 'embed', 'uglify']);
+grunt.registerTask('build', ['concat','compress','uglify']);
+
+grunt.registerTask('default', 'build');
 
 };

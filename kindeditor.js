@@ -1,23 +1,21 @@
-/*******************************************************************************
-* KindEditor - WYSIWYG HTML Editor for Internet
-* Copyright (C) 2006-2013 kindsoft.net
-*
-* @author Roddy <luolonghao@gmail.com>
-* @website http://www.kindsoft.net/
-* @licence http://www.kindsoft.net/license.php
-* @version 4.1.10 (2013-11-23)
-*******************************************************************************/
+/* KindEditor 4.1.6 (2015-10-08), Copyright (C) kindsoft.net, Licence: http://www.kindsoft.net/license.php */
 (function (window, undefined) {
+
 	if (window.KindEditor) {
 		return;
 	}
+
+
+/**/ var undefined;
+
 if (!window.console) {
 	window.console = {};
 }
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.1.10 (2013-11-23)',
+
+var _VERSION = '${VERSION}',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -31,18 +29,21 @@ var _VERSION = '4.1.10 (2013-11-23)',
 	_matches = /(?:msie|firefox|webkit|opera)[\/:\s](\d+)/.exec(_ua),
 	_V = _matches ? _matches[1] : '0',
 	_TIME = new Date().getTime();
+
 function _isArray(val) {
 	if (!val) {
 		return false;
 	}
 	return Object.prototype.toString.call(val) === '[object Array]';
 }
+
 function _isFunction(val) {
 	if (!val) {
 		return false;
 	}
 	return Object.prototype.toString.call(val) === '[object Function]';
 }
+
 function _inArray(val, arr) {
 	for (var i = 0, len = arr.length; i < len; i++) {
 		if (val === arr[i]) {
@@ -51,6 +52,7 @@ function _inArray(val, arr) {
 	}
 	return -1;
 }
+
 function _each(obj, fn) {
 	if (_isArray(obj)) {
 		for (var i = 0, len = obj.length; i < len; i++) {
@@ -68,27 +70,35 @@ function _each(obj, fn) {
 		}
 	}
 }
+
 function _trim(str) {
+	// Forgive various special whitespaces, e.g. &nbsp;(\xa0).
 	return str.replace(/(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
 }
+
 function _inString(val, str, delimiter) {
 	delimiter = delimiter === undefined ? ',' : delimiter;
 	return (delimiter + str + delimiter).indexOf(delimiter + val + delimiter) >= 0;
 }
+
 function _addUnit(val, unit) {
 	unit = unit || 'px';
 	return val && /^\d+$/.test(val) ? val + unit : val;
 }
+
 function _removeUnit(val) {
 	var match;
 	return val && (match = /(\d+)/.exec(val)) ? parseInt(match[1], 10) : 0;
 }
+
 function _escape(val) {
 	return val.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
 function _unescape(val) {
 	return val.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 }
+
 function _toCamel(str) {
 	var arr = str.split('-');
 	str = '';
@@ -97,6 +107,7 @@ function _toCamel(str) {
 	});
 	return str;
 }
+
 function _toHex(val) {
 	function hex(d) {
 		var s = parseInt(d, 10).toString(16).toUpperCase();
@@ -108,6 +119,7 @@ function _toHex(val) {
 		}
 	);
 }
+
 function _toMap(val, delimiter) {
 	delimiter = delimiter === undefined ? ',' : delimiter;
 	var map = {}, arr = _isArray(val) ? val : val.split(delimiter), match;
@@ -122,18 +134,23 @@ function _toMap(val, delimiter) {
 	});
 	return map;
 }
+
 function _toArray(obj, offset) {
 	return Array.prototype.slice.call(obj, offset || 0);
 }
+
 function _undef(val, defaultVal) {
 	return val === undefined ? defaultVal : val;
 }
+
 function _invalidUrl(url) {
 	return !url || /[<>"]/.test(url);
 }
+
 function _addParam(url, param) {
 	return url.indexOf('?') >= 0 ? url + '&' + param : url + '?' + param;
 }
+
 function _extend(child, parent, proto) {
 	if (!proto) {
 		proto = parent;
@@ -154,6 +171,8 @@ function _extend(child, parent, proto) {
 	child.prototype = childProto;
 	child.parent = parent ? parent.prototype : null;
 }
+
+//From http://www.json.org/json2.js
 function _json(text) {
 	var match;
 	if ((match = /\{[\s\S]*\}|\[[\s\S]*\]/.exec(text))) {
@@ -174,7 +193,9 @@ function _json(text) {
 	}
 	throw 'JSON parse error';
 }
+
 var _round = Math.round;
+
 var K = {
 	DEBUG : false,
 	VERSION : _VERSION,
@@ -204,6 +225,7 @@ var K = {
 	extend : _extend,
 	json : _json
 };
+
 var _INLINE_TAG_MAP = _toMap('a,abbr,acronym,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,img,input,ins,kbd,label,map,q,s,samp,select,small,span,strike,strong,sub,sup,textarea,tt,u,var'),
 	_BLOCK_TAG_MAP = _toMap('address,applet,blockquote,body,center,dd,dir,div,dl,dt,fieldset,form,frameset,h1,h2,h3,h4,h5,h6,head,hr,html,iframe,ins,isindex,li,map,menu,meta,noframes,noscript,object,ol,p,pre,script,style,table,tbody,td,tfoot,th,thead,title,tr,ul'),
 	_SINGLE_TAG_MAP = _toMap('area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed'),
@@ -214,6 +236,8 @@ var _INLINE_TAG_MAP = _toMap('a,abbr,acronym,b,basefont,bdo,big,br,button,cite,c
 	_AUTOCLOSE_TAG_MAP = _toMap('colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr'),
 	_FILL_ATTR_MAP = _toMap('checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected'),
 	_VALUE_TAG_MAP = _toMap('input,button,textarea,select');
+
+
 function _getBasePath() {
 	var els = document.getElementsByTagName('script'), src;
 	for (var i = 0, len = els.length; i < len; i++) {
@@ -224,7 +248,9 @@ function _getBasePath() {
 	}
 	return '';
 }
+
 K.basePath = _getBasePath();
+
 K.options = {
 	designMode : true,
 	fullscreenMode : false,
@@ -236,19 +262,19 @@ K.options = {
 	themesPath : K.basePath + 'themes/',
 	langPath : K.basePath + 'lang/',
 	pluginsPath : K.basePath + 'plugins/',
-	themeType : 'default',
+	themeType : 'default', // default, simple
 	langType : 'zh_CN',
-	urlType : '',
-	newlineTag : 'p',
-	resizeType : 2,
-	syncType : 'form',
-	pasteType : 2,
-	dialogAlignType : 'page',
+	urlType : '', // "", relative, absolute, domain
+	newlineTag : 'p', // p, br
+	resizeType : 2, // 0, 1, 2
+	syncType : 'form', // "", form
+	pasteType : 2, // 0:none, 1:text, 2:HTML
+	dialogAlignType : 'page', // page, editor
 	useContextmenu : true,
 	fullscreenShortcut : false,
 	bodyClass : 'ke-content',
-	indentChar : '\t',
-	cssPath : '',
+	indentChar : '\t', // \t, "  "
+	cssPath : '', //String or Array
 	cssData : '',
 	minWidth : 650,
 	minHeight : 100,
@@ -308,9 +334,46 @@ K.options = {
 	},
 	layout : '<div class="container"><div class="toolbar"></div><div class="edit"></div><div class="statusbar"></div></div>'
 };
+
+
 var _useCapture = false;
+
+/**
+DOM_VK_BACK_SPACE : 8
+DOM_VK_TAB : 9
+DOM_VK_RETURN : 13
+DOM_VK_SPACE : 32
+DOM_VK_PAGE_UP : 33
+DOM_VK_PAGE_DOWN : 34
+DOM_VK_END : 35
+DOM_VK_HOME : 36
+DOM_VK_LEFT : 37
+DOM_VK_UP : 38
+DOM_VK_RIGHT : 39
+DOM_VK_DOWN : 40
+DOM_VK_DELETE : 46
+DOM_VK_0 ~ DOM_VK_9 : 48 ~ 57
+DOM_VK_SEMICOLON : 59 (;:)
+DOM_VK_EQUALS : 61 (=+) (+)
+DOM_VK_A ~ DOM_VK_Z : 65 ~ 90
+DOM_VK_MULTIPLY : 106 (*)
+DOM_VK_SUBTRACT : 109 (-_) (-)
+DOM_VK_DECIMAL : 110 (.)
+DOM_VK_DIVIDE : 111 (/)
+DOM_VK_COMMA : 188 (,<)
+DOM_VK_PERIOD : 190 (.>)
+DOM_VK_SLASH : 191 (/?)
+DOM_VK_BACK_QUOTE : 192 (`~)
+DOM_VK_OPEN_BRACKET : 219 ([{)
+DOM_VK_BACK_SLASH : 220 (\|)
+DOM_VK_CLOSE_BRACKET : 221 (]})
+DOM_VK_QUOTE : 222 ('")
+*/
+// 输入文字的键值
 var _INPUT_KEY_MAP = _toMap('8,9,13,32,46,48..57,59,61,65..90,106,109..111,188,190..192,219..222');
+// 移动光标的键值
 var _CURSORMOVE_KEY_MAP = _toMap('33..40');
+// 输入文字或移动光标的键值
 var _CHANGE_KEY_MAP = {};
 _each(_INPUT_KEY_MAP, function(key, val) {
 	_CHANGE_KEY_MAP[key] = val;
@@ -318,6 +381,8 @@ _each(_INPUT_KEY_MAP, function(key, val) {
 _each(_CURSORMOVE_KEY_MAP, function(key, val) {
 	_CHANGE_KEY_MAP[key] = val;
 });
+
+// add native event
 function _bindEvent(el, type, fn) {
 	if (el.addEventListener){
 		el.addEventListener(type, fn, _useCapture);
@@ -325,6 +390,7 @@ function _bindEvent(el, type, fn) {
 		el.attachEvent('on' + type, fn);
 	}
 }
+// remove native event
 function _unbindEvent(el, type, fn) {
 	if (el.removeEventListener){
 		el.removeEventListener(type, fn, _useCapture);
@@ -332,9 +398,12 @@ function _unbindEvent(el, type, fn) {
 		el.detachEvent('on' + type, fn);
 	}
 }
+
 var _EVENT_PROPS = ('altKey,attrChange,attrName,bubbles,button,cancelable,charCode,clientX,clientY,ctrlKey,currentTarget,' +
 	'data,detail,eventPhase,fromElement,handler,keyCode,metaKey,newValue,offsetX,offsetY,originalTarget,pageX,' +
 	'pageY,prevValue,relatedNode,relatedTarget,screenX,screenY,shiftKey,srcElement,target,toElement,view,wheelDelta,which').split(',');
+
+// create KEvent class
 function KEvent(el, event) {
 	this.init(el, event);
 }
@@ -368,6 +437,38 @@ _extend(KEvent, {
 		if (!self.which && self.button !== undefined) {
 			self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : (self.button & 4 ? 2 : 0)));
 		}
+		/**
+			DOM_VK_SEMICOLON : 59 (;:)
+				- IE,WEBKIT: 186
+				- GECKO,OPERA : 59
+			DOM_VK_EQUALS : 61 (=+)
+				- IE,WEBKIT : 187
+				- GECKO : 107
+				- OPERA : 61
+			DOM_VK_NUMPAD0 ~ DOM_VK_NUMPAD9 : 96 ~ 105
+				- IE、WEBKIT,GECKO : 96 ~ 105
+				- OPERA : 48 ~ 57
+			DOM_VK_MULTIPLY : 106 (*)
+				- IE、WEBKIT,GECKO : 106
+				- OPERA : 42
+			DOM_VK_ADD : 107 (+)
+				- IE、WEBKIT,GECKO : 107
+				- OPERA : 43
+			DOM_VK_SUBTRACT : 109 (-_) (-)
+				- IE,WEBKIT : 189, 109
+				- GECKO : 109, 109
+				- OPERA : 109, 45
+			DOM_VK_DECIMAL : 110 (.)
+				- IE、WEBKIT,GECKO : 110
+				- OPERA : 78
+			DOM_VK_DIVIDE : 111 (/)
+				- IE、WEBKIT,GECKO : 111
+				- OPERA : 47
+
+			Reference:
+			https://developer.mozilla.org/en/DOM/Event/UIEvent/KeyEvent
+			http://msdn.microsoft.com/en-us/library/ms536940(v=VS.85).aspx
+		*/
 		switch (self.which) {
 		case 186 :
 			self.which = 59;
@@ -416,14 +517,18 @@ _extend(KEvent, {
 		this.stopPropagation();
 	}
 });
+
 var _eventExpendo = 'kindeditor_' + _TIME, _eventId = 0, _eventData = {};
+
 function _getId(el) {
 	return el[_eventExpendo] || null;
 }
+
 function _setId(el) {
 	el[_eventExpendo] = ++_eventId;
 	return _eventId;
 }
+
 function _removeId(el) {
 	try {
 		delete el[_eventExpendo];
@@ -433,6 +538,7 @@ function _removeId(el) {
 		}
 	}
 }
+
 function _bind(el, type, fn) {
 	if (type.indexOf(',') >= 0) {
 		_each(type.split(','), function() {
@@ -470,6 +576,7 @@ function _bind(el, type, fn) {
 	}
 	_bindEvent(el, type, events[0]);
 }
+
 function _unbind(el, type, fn) {
 	if (type && type.indexOf(',') >= 0) {
 		_each(type.split(','), function() {
@@ -522,6 +629,7 @@ function _unbind(el, type, fn) {
 		}
 	}
 }
+
 function _fire(el, type) {
 	if (type.indexOf(',') >= 0) {
 		_each(type.split(','), function() {
@@ -538,6 +646,7 @@ function _fire(el, type) {
 		events[0]();
 	}
 }
+
 function _ctrl(el, key, fn) {
 	var self = this;
 	key = /^\d{2,}$/.test(key) ? key : key.toUpperCase().charCodeAt(0);
@@ -548,7 +657,9 @@ function _ctrl(el, key, fn) {
 		}
 	});
 }
+
 var _readyFinished = false;
+
 function _ready(fn) {
 	if (_readyFinished) {
 		fn(KindEditor);
@@ -582,6 +693,7 @@ function _ready(fn) {
 		_bind(document, 'DOMContentLoaded', readyFunc);
 	} else if (document.attachEvent) {
 		_bind(document, 'readystatechange', ieReadyStateFunc);
+		// 在跨域的frame里调用会报错
 		var toplevel = false;
 		try {
 			toplevel = window.frameElement == null;
@@ -592,6 +704,14 @@ function _ready(fn) {
 	}
 	_bind(window, 'load', readyFunc);
 }
+
+/**
+	Note:
+	发现绑定dbclick事件后移除element会有内存泄漏，以下代码也不起作用。
+	Reference:
+	http://isaacschlueter.com/2006/10/msie-memory-leaks/
+	http://msdn.microsoft.com/en-us/library/bb250448.aspx
+*/
 if (_IE) {
 	window.attachEvent('onunload', function() {
 		_each(_eventData, function(key, events) {
@@ -601,8 +721,10 @@ if (_IE) {
 		});
 	});
 }
+
 K.ctrl = _ctrl;
 K.ready = _ready;
+
 function _getCssList(css) {
 	var list = {},
 		reg = /\s*([\w\-]+)\s*:([^;]*)(;|$)/g,
@@ -614,6 +736,7 @@ function _getCssList(css) {
 	}
 	return list;
 }
+
 function _getAttrList(tag) {
 	var list = {},
 		reg = /\s+(?:([\w\-:]+)|(?:([\w\-:]+)=([^\s"'<>]+))|(?:([\w\-:"]+)="([^"]*)")|(?:([\w\-:"]+)='([^']*)'))(?=(?:\s|\/|>)+)/g,
@@ -625,6 +748,7 @@ function _getAttrList(tag) {
 	}
 	return list;
 }
+
 function _addClassToTag(tag, className) {
 	if (/\s+class\s*=/.test(tag)) {
 		tag = tag.replace(/(\s+class=["']?)([^"']*)(["']?[\s>])/, function($0, $1, $2, $3) {
@@ -639,6 +763,7 @@ function _addClassToTag(tag, className) {
 	}
 	return tag;
 }
+
 function _formatCss(css) {
 	var str = '';
 	_each(_getCssList(css), function(key, val) {
@@ -646,8 +771,11 @@ function _formatCss(css) {
 	});
 	return str;
 }
+
 function _formatUrl(url, mode, host, pathname) {
 	mode = _undef(mode, '').toLowerCase();
+	// 移除连续斜线，比如，http://localhost/upload/file/201205//maincus.swf
+	// base64 data 除外
 	if (url.substr(0, 5) != 'data:') {
 		url = url.replace(/([^:])\/\//g, '$1/');
 	}
@@ -715,7 +843,9 @@ function _formatUrl(url, mode, host, pathname) {
 	}
 	return url;
 }
+
 function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
+	// null or undefined: object == null
 	if (html == null) {
 		html = '';
 	}
@@ -723,25 +853,37 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 	wellFormatted = _undef(wellFormatted, false);
 	indentChar = _undef(indentChar, '\t');
 	var fontSizeList = 'xx-small,x-small,small,medium,large,x-large,xx-large'.split(',');
+	// 将pre里的br转换成\n
 	html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function($0, $1, $2, $3) {
 		return $1 + $2.replace(/<(?:br|br\s[^>]*)>/ig, '\n') + $3;
 	});
+	// <br/></p> to </p>
 	html = html.replace(/<(?:br|br\s[^>]*)\s*\/?>\s*<\/p>/ig, '</p>');
+	// <p></p> to <p><br /></p>
 	html = html.replace(/(<(?:p|p\s[^>]*)>)\s*(<\/p>)/ig, '$1<br />$2');
+	// empty char
 	html = html.replace(/\u200B/g, '');
+	// &copy;
 	html = html.replace(/\u00A9/g, '&copy;');
+	// &reg;
 	html = html.replace(/\u00AE/g, '&reg;');
+	// Bugfix:
+	// https://github.com/kindsoft/kindeditor/issues/116
+	// https://github.com/kindsoft/kindeditor/issues/145
 	html = html.replace(/<[^>]+/g, function($0) {
 		return $0.replace(/\s+/g, ' ');
 	});
+
 	var htmlTagMap = {};
 	if (htmlTags) {
+		// 展开htmlTags里的key
 		_each(htmlTags, function(key, val) {
 			var arr = key.split(',');
 			for (var i = 0, len = arr.length; i < len; i++) {
 				htmlTagMap[arr[i]] = _toMap(val);
 			}
 		});
+		// 删除script和style里的内容
 		if (!htmlTagMap.script) {
 			html = html.replace(/(<(?:script|script\s[^>]*)>)([\s\S]*?)(<\/script>)/ig, '');
 		}
@@ -759,12 +901,15 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 			attr = $4 || '',
 			endSlash = $5 ? ' ' + $5 : '',
 			endNewline = $6 || '';
+		// 不在名单里的过滤掉
 		if (htmlTags && !htmlTagMap[tagName]) {
 			return '';
 		}
+		// 无闭合标签的自动添加斜线
 		if (endSlash === '' && _SINGLE_TAG_MAP[tagName]) {
 			endSlash = ' /';
 		}
+		// inline tag时自动将多个空白转换成一个空格
 		if (_INLINE_TAG_MAP[tagName]) {
 			if (startNewline) {
 				startNewline = ' ';
@@ -773,6 +918,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				endNewline = ' ';
 			}
 		}
+		// pre,style,script tag的格式化
 		if (_PRE_TAG_MAP[tagName]) {
 			if (startSlash) {
 				endNewline = '\n';
@@ -780,9 +926,11 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				startNewline = '\n';
 			}
 		}
+		// br tag
 		if (wellFormatted && tagName == 'br') {
 			endNewline = '\n';
 		}
+		// block tag的格式化
 		if (_BLOCK_TAG_MAP[tagName] && !_PRE_TAG_MAP[tagName]) {
 			if (wellFormatted) {
 				if (startSlash && tagStack.length > 0 && tagStack[tagStack.length - 1] === tagName) {
@@ -809,6 +957,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 		}
 		if (attr !== '') {
 			var attrMap = _getAttrList(full);
+			// 将font tag转换成span tag
 			if (tagName === 'font') {
 				var fontStyleMap = {}, fontStyle = '';
 				_each(attrMap, function(key, val) {
@@ -842,13 +991,17 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				});
 				attrMap.style = fontStyle;
 			}
+			// 处理attribute和style
 			_each(attrMap, function(key, val) {
+				// 补全单独属性
 				if (_FILL_ATTR_MAP[key]) {
 					attrMap[key] = key;
 				}
+				// 处理URL
 				if (_inArray(key, ['src', 'href']) >= 0) {
 					attrMap[key] = _formatUrl(val, urlType);
 				}
+				// 过滤属性
 				if (htmlTags && key !== 'style' && !htmlTagMap[tagName]['*'] && !htmlTagMap[tagName][key] ||
 					tagName === 'body' && key === 'contenteditable' ||
 					/^kindeditor_\d+$/.test(key)) {
@@ -857,6 +1010,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 				if (key === 'style' && val !== '') {
 					var styleMap = _getCssList(val);
 					_each(styleMap, function(k, v) {
+						// 过滤样式
 						if (htmlTags && !htmlTagMap[tagName].style && !htmlTagMap[tagName]['.' + k]) {
 							delete styleMap[k];
 						}
@@ -882,13 +1036,16 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 		}
 		return startNewline + '<' + startSlash + tagName + attr + endSlash + '>' + endNewline;
 	});
+	// 将pre里的\n转换成 临时标签 + \n，防止被替换
 	html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function($0, $1, $2, $3) {
 		return $1 + $2.replace(/\n/g, '<span id="__kindeditor_pre_newline__">\n') + $3;
 	});
 	html = html.replace(/\n\s*\n/g, '\n');
+	// 删除临时标签
 	html = html.replace(/<span id="__kindeditor_pre_newline__">\n/g, '\n');
 	return _trim(html);
 }
+// 清理MS Word专用标签
 function _clearMsWord(html, htmlTags) {
 	html = html.replace(/<meta[\s\S]*?>/ig, '')
 		.replace(/<![\s\S]*?>/ig, '')
@@ -902,6 +1059,7 @@ function _clearMsWord(html, htmlTags) {
 		});
 	return _formatHtml(html, htmlTags);
 }
+// 根据URL判断 media type
 function _mediaType(src) {
 	if (/\.(rm|rmvb)(\?|$)/i.test(src)) {
 		return 'audio/x-pn-realaudio-plugin';
@@ -911,6 +1069,7 @@ function _mediaType(src) {
 	}
 	return 'video/x-ms-asf-plugin';
 }
+// 根据 media type取得className
 function _mediaClass(type) {
 	if (/realaudio/i.test(type)) {
 		return 'ke-rm';
@@ -920,9 +1079,11 @@ function _mediaClass(type) {
 	}
 	return 'ke-media';
 }
+
 function _mediaAttrs(srcTag) {
 	return _getAttrList(unescape(srcTag));
 }
+
 function _mediaEmbed(attrs) {
 	var html = '<embed ';
 	_each(attrs, function(key, val) {
@@ -931,6 +1092,7 @@ function _mediaEmbed(attrs) {
 	html += '/>';
 	return html;
 }
+
 function _mediaImg(blankPath, attrs) {
 	var width = attrs.width,
 		height = attrs.height,
@@ -954,10 +1116,18 @@ function _mediaImg(blankPath, attrs) {
 	html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';
 	return html;
 }
+
+// Simple JavaScript Templating
+// John Resig - http://ejohn.org/ - MIT Licensed
+// http://ejohn.org/blog/javascript-micro-templating/
 function _tmpl(str, data) {
+	// Figure out if we're getting a template, or if we need to
+	// load the template - and be sure to cache the result.
 	var fn = new Function("obj",
 		"var p=[],print=function(){p.push.apply(p,arguments);};" +
+		// Introduce the data as local variables using with(){}
 		"with(obj){p.push('" +
+		// Convert the template into pure JavaScript
 		str.replace(/[\r\t\n]/g, " ")
 			.split("<%").join("\t")
 			.replace(/((^|%>)[^\t]*)'/g, "$1\r")
@@ -965,8 +1135,10 @@ function _tmpl(str, data) {
 			.split("\t").join("');")
 			.split("%>").join("p.push('")
 			.split("\r").join("\\'") + "');}return p.join('');");
+	// Provide some basic currying to the user
 	return data ? fn(data) : fn;
 }
+
 K.formatUrl = _formatUrl;
 K.formatHtml = _formatHtml;
 K.getCssList = _getCssList;
@@ -977,7 +1149,12 @@ K.mediaEmbed = _mediaEmbed;
 K.mediaImg = _mediaImg;
 K.clearMsWord = _clearMsWord;
 K.tmpl = _tmpl;
+
+
 function _contains(nodeA, nodeB) {
+	// Bypass comparison on document node since
+	// we don't deal with cross frame,
+	// e.g. document.body.parentNode.parentNode == document (false for IE).
 	if (nodeA.nodeType == 9 && nodeB.nodeType != 9) {
 		return true;
 	}
@@ -988,12 +1165,15 @@ function _contains(nodeA, nodeB) {
 	}
 	return false;
 }
+
 var _getSetAttrDiv = document.createElement('div');
 _getSetAttrDiv.setAttribute('className', 't');
 var _GET_SET_ATTRIBUTE = _getSetAttrDiv.className !== 't';
+
 function _getAttr(el, key) {
 	key = key.toLowerCase();
 	var val = null;
+	// IE6,IE7,IE=EmulateIE7
 	if (!_GET_SET_ATTRIBUTE && el.nodeName.toLowerCase() != 'script') {
 		var div = el.ownerDocument.createElement('div');
 		div.appendChild(el.cloneNode(false));
@@ -1002,6 +1182,7 @@ function _getAttr(el, key) {
 			val = list[key];
 		}
 	} else {
+		// IE8����<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />���׳��쳣
 		try {
 			val = el.getAttribute(key, 2);
 		} catch(e) {
@@ -1013,6 +1194,7 @@ function _getAttr(el, key) {
 	}
 	return val;
 }
+
 function _queryAll(expr, root) {
 	var exprList = expr.split(',');
 	if (exprList.length > 1) {
@@ -1189,21 +1371,27 @@ function _queryAll(expr, root) {
 	}
 	return results;
 }
+
 function _query(expr, root) {
 	var arr = _queryAll(expr, root);
 	return arr.length > 0 ? arr[0] : null;
 }
+
 K.query = _query;
 K.queryAll = _queryAll;
+
+
 function _get(val) {
 	return K(val)[0];
 }
+
 function _getDoc(node) {
 	if (!node) {
 		return document;
 	}
 	return node.ownerDocument || node.document || node;
 }
+
 function _getWin(node) {
 	if (!node) {
 		return window;
@@ -1211,6 +1399,7 @@ function _getWin(node) {
 	var doc = _getDoc(node);
 	return doc.parentWindow || doc.defaultView;
 }
+
 function _setHtml(el, html) {
 	if (el.nodeType != 1) {
 		return;
@@ -1221,21 +1410,25 @@ function _setHtml(el, html) {
 		var temp = doc.getElementById('__kindeditor_temp_tag__');
 		temp.parentNode.removeChild(temp);
 	} catch(e) {
+		// bugfix: 在IE上innerHTML有时候报错
 		K(el).empty();
 		K('@' + html, doc).each(function() {
 			el.appendChild(this);
 		});
 	}
 }
+
 function _hasClass(el, cls) {
 	return _inString(cls, el.className, ' ');
 }
+
 function _setAttr(el, key, val) {
 	if (_IE && _V < 8 && key.toLowerCase() == 'class') {
 		key = 'className';
 	}
 	el.setAttribute(key, '' + val);
 }
+
 function _removeAttr(el, key) {
 	if (_IE && _V < 8 && key.toLowerCase() == 'class') {
 		key = 'className';
@@ -1243,12 +1436,14 @@ function _removeAttr(el, key) {
 	_setAttr(el, key, '');
 	el.removeAttribute(key);
 }
+
 function _getNodeName(node) {
 	if (!node || !node.nodeName) {
 		return '';
 	}
 	return node.nodeName.toLowerCase();
 }
+
 function _computedCss(el, key) {
 	var self = this, win = _getWin(el), camelKey = _toCamel(key), val = '';
 	if (win.getComputedStyle) {
@@ -1259,21 +1454,26 @@ function _computedCss(el, key) {
 	}
 	return val;
 }
+
 function _hasVal(node) {
 	return !!_VALUE_TAG_MAP[_getNodeName(node)];
 }
+
 function _docElement(doc) {
 	doc = doc || document;
 	return _QUIRKS ? doc.body : doc.documentElement;
 }
+
 function _docHeight(doc) {
 	var el = _docElement(doc);
 	return Math.max(el.scrollHeight, el.clientHeight);
 }
+
 function _docWidth(doc) {
 	var el = _docElement(doc);
 	return Math.max(el.scrollWidth, el.clientWidth);
 }
+
 function _getScrollPos(doc) {
 	doc = doc || document;
 	var x, y;
@@ -1286,6 +1486,8 @@ function _getScrollPos(doc) {
 	}
 	return {x : x, y : y};
 }
+
+// create KNode class
 function KNode(node) {
 	this.init(node);
 }
@@ -1735,6 +1937,7 @@ _extend(KNode, {
 		return this;
 	}
 });
+
 _each(('blur,focus,focusin,focusout,load,resize,scroll,unload,click,dblclick,' +
 	'mousedown,mouseup,mousemove,mouseover,mouseout,mouseenter,mouseleave,' +
 	'change,select,submit,keydown,keypress,keyup,error,contextmenu').split(','), function(i, type) {
@@ -1742,7 +1945,9 @@ _each(('blur,focus,focusin,focusout,load,resize,scroll,unload,click,dblclick,' +
 		return fn ? this.bind(type, fn) : this.fire(type);
 	};
 });
+
 var _K = K;
+
 K = function(expr, root) {
 	if (expr === undefined || expr === null) {
 		return;
@@ -1761,9 +1966,12 @@ K = function(expr, root) {
 		if (expr.charAt(0) === '@') {
 			expr = expr.substr(1);
 		}
+		// HTML
+		// 包含HTML代码，或者第一个字符为"@"时当做HTML字符串
 		if (expr.length !== length || /<.+>/.test(expr)) {
 			var doc = root ? root.ownerDocument || root : document,
 				div = doc.createElement('div'), list = [];
+			// HTML前添加IMG，防止IE抛出异常
 			div.innerHTML = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + expr;
 			for (var i = 0, len = div.childNodes.length; i < len; i++) {
 				var child = div.childNodes[i];
@@ -1774,35 +1982,52 @@ K = function(expr, root) {
 			}
 			return newNode(list);
 		}
+		// selector
 		return newNode(_queryAll(expr, root));
 	}
+	// KNode
 	if (expr && expr.constructor === KNode) {
 		return expr;
 	}
+	// jQuery object
 	if (expr.toArray) {
 		expr = expr.toArray();
 	}
+	// Native NodeList
 	if (_isArray(expr)) {
 		return newNode(expr);
 	}
+	// Native Node
 	return newNode(_toArray(arguments));
 };
+
 _each(_K, function(key, val) {
 	K[key] = val;
 });
+
 K.NodeClass = KNode;
+
 window.KindEditor = K;
+
+
 var _START_TO_START = 0,
 	_START_TO_END = 1,
 	_END_TO_END = 2,
 	_END_TO_START = 3,
 	_BOOKMARK_ID = 0;
+
 function _updateCollapsed(range) {
 	range.collapsed = (range.startContainer === range.endContainer && range.startOffset === range.endOffset);
 	return range;
 }
+/**
+	cloneContents: _copyAndDelete(this, true, false)
+	extractContents: _copyAndDelete(this, true, true)
+	deleteContents: _copyAndDelete(this, false, true)
+*/
 function _copyAndDelete(range, isCopy, isDelete) {
 	var doc = range.doc, nodeList = [];
+	//split a textNode
 	function splitTextNode(node, startOffset, endOffset) {
 		var length = node.nodeValue.length, centerNode;
 		if (isCopy) {
@@ -1841,9 +2066,12 @@ function _copyAndDelete(range, isCopy, isDelete) {
 			}
 		}
 	}
+
 	var copyRange = range.cloneRange().down();
+
 	var start = -1, incStart = -1, incEnd = -1, end = -1,
 		ancestor = range.commonAncestor(), frag = doc.createDocumentFragment();
+	// startContainer is textNode and startContainer == endContainer
 	if (ancestor.nodeType == 3) {
 		var textNode = splitTextNode(ancestor, range.startOffset, range.endOffset);
 		if (isCopy) {
@@ -1852,6 +2080,7 @@ function _copyAndDelete(range, isCopy, isDelete) {
 		removeNodes();
 		return isCopy ? frag : range;
 	}
+	// other case
 	function extractNodes(parent, frag) {
 		var node = parent.firstChild, nextNode;
 		while (node) {
@@ -1899,6 +2128,7 @@ function _copyAndDelete(range, isCopy, isDelete) {
 						textNode = splitTextNode(node, 0, node.nodeValue.length);
 					}
 					if (isCopy) {
+						// TODO: IE9有时候报错
 						try {
 							frag.appendChild(textNode);
 						} catch(e) {}
@@ -1908,7 +2138,9 @@ function _copyAndDelete(range, isCopy, isDelete) {
 			node = nextNode;
 		}
 	}
+
 	extractNodes(ancestor, frag);
+
 	if (isDelete) {
 		range.up().collapse(true);
 	}
@@ -1920,6 +2152,7 @@ function _copyAndDelete(range, isCopy, isDelete) {
 	}
 	return isCopy ? frag : range;
 }
+//在marquee、select元素里不能使用moveToElementText，IE专用
 function _moveToElementText(range, el) {
 	var node = el;
 	while (node) {
@@ -1929,10 +2162,12 @@ function _moveToElementText(range, el) {
 		}
 		node = node.parentNode;
 	}
+	// IE有时候报错，屏蔽错误
 	try {
 		range.moveToElementText(el);
 	} catch(e) {}
 }
+//根据原生Range，取得开始节点和结束节点的位置。IE专用
 function _getStartEnd(rng, isStart) {
 	var doc = rng.parentElement().ownerDocument,
 		pointRange = rng.duplicate();
@@ -1953,10 +2188,12 @@ function _getStartEnd(rng, isStart) {
 		}
 		if (node.nodeType == 1) {
 			var nodeRange = rng.duplicate(), dummy, knode = K(node), newNode = node;
+			// <table></table><img>ab[cd]ef
 			if (knode.isControl()) {
 				dummy = doc.createElement('span');
 				knode.after(dummy);
 				newNode = dummy;
+				// 0123456[7]89<table><tr><td>123</td></tr></table>
 				startPos += knode.text().replace(/\r\n|\n|\r/g, '').length;
 			}
 			_moveToElementText(nodeRange, newNode);
@@ -1977,9 +2214,11 @@ function _getStartEnd(rng, isStart) {
 			startNode = node;
 		}
 	}
+	//<p>abc<img>|</p>
 	if (cmp < 0 && startNode.nodeType == 1) {
 		return {node: parent, offset: K(parent.lastChild).index() + 1};
 	}
+	//<p><table></table><img>ab|c</p>
 	if (cmp > 0) {
 		while (startNode.nextSibling && startNode.nodeType == 1) {
 			startNode = startNode.nextSibling;
@@ -1989,6 +2228,7 @@ function _getStartEnd(rng, isStart) {
 	_moveToElementText(testRange, parent);
 	testRange.setEndPoint('StartToEnd', pointRange);
 	startPos -= testRange.text.replace(/\r\n|\n|\r/g, '').length;
+	// [textNode1][textNode2]ab|cd
 	if (cmp > 0 && startNode.nodeType == 3) {
 		var prevNode = startNode.previousSibling;
 		while (prevNode && prevNode.nodeType == 3) {
@@ -1998,6 +2238,7 @@ function _getStartEnd(rng, isStart) {
 	}
 	return {node: startNode, offset: startPos};
 }
+//根据Node和offset，取得表示该位置的原生Range。IE专用
 function _getEndRange(node, offset) {
 	var doc = node.ownerDocument || node,
 		range = doc.body.createTextRange();
@@ -2055,14 +2296,18 @@ function _getEndRange(node, offset) {
 	K(dummy).remove();
 	return range;
 }
+// convert native Range to KRange
 function _toRange(rng) {
 	var doc, range;
+	// <table><tr><td></td>|<td></td></tr></table>
+	// to <table><tr><td></td><td>|</td></tr></table>
 	function tr2td(start) {
 		if (K(start.node).name == 'tr') {
 			start.node = start.node.cells[start.offset];
 			start.offset = 0;
 		}
 	}
+	// IE
 	if (_IERANGE) {
 		if (rng.item) {
 			doc = _getDoc(rng.item(0));
@@ -2080,6 +2325,7 @@ function _toRange(rng) {
 		range.setEnd(end.node, end.offset);
 		return range;
 	}
+	// other browser
 	var startContainer = rng.startContainer;
 	doc = startContainer.ownerDocument || startContainer;
 	range = new KRange(doc);
@@ -2087,6 +2333,8 @@ function _toRange(rng) {
 	range.setEnd(rng.endContainer, rng.endOffset);
 	return range;
 }
+
+// create KRange class
 function KRange(doc) {
 	this.init(doc);
 }
@@ -2202,10 +2450,12 @@ _extend(KRange, {
 				nodeB = range.endContainer;
 				posB = range.endOffset;
 			}
+			// nodeA和nodeA相同时
 			if (nodeA === nodeB) {
 				var diff = posA - posB;
 				return diff > 0 ? 1 : (diff < 0 ? -1 : 0);
 			}
+			// nodeA是nodeB的祖先时
 			nodeC = nodeB;
 			while (nodeC && nodeC.parentNode !== nodeA) {
 				nodeC = nodeC.parentNode;
@@ -2213,6 +2463,7 @@ _extend(KRange, {
 			if (nodeC) {
 				return K(nodeC).index() >= posA ? -1 : 1;
 			}
+			// nodeB是nodeA的祖先时
 			nodeC = nodeA;
 			while (nodeC && nodeC.parentNode !== nodeB) {
 				nodeC = nodeC.parentNode;
@@ -2220,14 +2471,17 @@ _extend(KRange, {
 			if (nodeC) {
 				return K(nodeC).index() >= posB ? 1 : -1;
 			}
+			// nodeB的下一个节点是nodeA的祖先
 			nodeC = K(nodeB).next();
 			if (nodeC && nodeC.contains(nodeA)) {
 				return 1;
 			}
+			// nodeA的下一个节点是nodeB的祖先
 			nodeC = K(nodeA).next();
 			if (nodeC && nodeC.contains(nodeB)) {
 				return -1;
 			}
+			//其它情况，暂时不需要
 		} else {
 			return rangeA.compareBoundaryPoints(how, rangeB);
 		}
@@ -2236,6 +2490,7 @@ _extend(KRange, {
 		return new KRange(this.doc).setStart(this.startContainer, this.startOffset).setEnd(this.endContainer, this.endOffset);
 	},
 	toString : function() {
+		//TODO
 		var rng = this.get(), str = _IERANGE ? rng.text : rng.toString();
 		return str.replace(/\r\n|\n|\r/g, '');
 	},
@@ -2253,24 +2508,29 @@ _extend(KRange, {
 			sc = self.startContainer, so = self.startOffset,
 			ec = self.endContainer, eo = self.endOffset,
 			firstChild, lastChild, c, nodeCount = 1;
+		//node为文档碎片时
 		if (node.nodeName.toLowerCase() === '#document-fragment') {
 			firstChild = node.firstChild;
 			lastChild = node.lastChild;
 			nodeCount = node.childNodes.length;
 		}
+		//startContainer为element时
 		if (sc.nodeType == 1) {
 			c = sc.childNodes[so];
 			if (c) {
 				sc.insertBefore(node, c);
+				//调整结束节点位置
 				if (sc === ec) {
 					eo += nodeCount;
 				}
 			} else {
 				sc.appendChild(node);
 			}
+		//startContainer为text时
 		} else if (sc.nodeType == 3) {
 			if (so === 0) {
 				sc.parentNode.insertBefore(node, sc);
+				//调整结束节点位置
 				if (sc.parentNode === ec) {
 					eo += nodeCount;
 				}
@@ -2287,6 +2547,7 @@ _extend(KRange, {
 					c = sc;
 				}
 				sc.parentNode.insertBefore(node, c);
+				//调整结束节点位置
 				if (sc === ec) {
 					ec = c;
 					eo -= so;
@@ -2307,14 +2568,17 @@ _extend(KRange, {
 		node.appendChild(this.extractContents());
 		return this.insertNode(node).selectNode(node);
 	},
+	// 判断range是不是control range
 	isControl : function() {
 		var self = this,
 			sc = self.startContainer, so = self.startOffset,
 			ec = self.endContainer, eo = self.endOffset, rng;
 		return sc.nodeType == 1 && sc === ec && so + 1 === eo && K(sc.childNodes[so]).isControl();
 	},
+	// get original range
 	get : function(hasControlRange) {
 		var self = this, doc = self.doc, node, rng;
+		// not IE
 		if (!_IERANGE) {
 			rng = doc.createRange();
 			try {
@@ -2323,11 +2587,13 @@ _extend(KRange, {
 			} catch (e) {}
 			return rng;
 		}
+		// IE control range
 		if (hasControlRange && self.isControl()) {
 			rng = doc.body.createControlRange();
 			rng.addElement(self.startContainer.childNodes[self.startOffset]);
 			return rng;
 		}
+		// IE text range
 		var range = self.cloneRange().down();
 		rng = doc.body.createTextRange();
 		rng.setEndPoint('StartToStart', _getEndRange(range.startContainer, range.startOffset));
@@ -2337,6 +2603,12 @@ _extend(KRange, {
 	html : function() {
 		return K(this.cloneContents()).outer();
 	},
+	// 降低range的位置
+	// <p><strong><span>123</span>|abc</strong>def</p>
+	// postion(strong, 1) -> positon("abc", 0)
+	// or
+	// <p><strong>abc|<span>123</span></strong>def</p>
+	// postion(strong, 1) -> positon("abc", 3)
 	down : function() {
 		var self = this;
 		function downPos(node, pos, isStart) {
@@ -2375,6 +2647,12 @@ _extend(KRange, {
 		downPos(self.endContainer, self.endOffset, false);
 		return self;
 	},
+	// 提高range的位置
+	// <p><strong><span>123</span>|abc</strong>def</p>
+	// positon("abc", 0) -> postion(strong, 1)
+	// or
+	// <p><strong>abc|<span>123</span></strong>def</p>
+	// positon("abc", 3) -> postion(strong, 1)
 	up : function() {
 		var self = this;
 		function upPos(node, pos, isStart) {
@@ -2399,6 +2677,8 @@ _extend(KRange, {
 		upPos(self.endContainer, self.endOffset, false);
 		return self;
 	},
+	// 扩大边界
+	// <p><strong><span>[123</span>abc]</strong>def</p> to <p>[<strong><span>123</span>abc</strong>]def</p>
 	enlarge : function(toBlock) {
 		var self = this;
 		self.up();
@@ -2439,6 +2719,8 @@ _extend(KRange, {
 		enlargePos(self.endContainer, self.endOffset, false);
 		return self;
 	},
+	// 缩小边界
+	// <body>[<p><strong>123</strong></p>]</body> to <body><p><strong>[123]</strong></p></body>
 	shrink : function() {
 		var self = this, child, collapsed = self.collapsed;
 		while (self.startContainer.nodeType == 1 && (child = self.startContainer.childNodes[self.startOffset]) && child.nodeType == 1 && !K(child).isSingle()) {
@@ -2452,6 +2734,7 @@ _extend(KRange, {
 		}
 		return self;
 	},
+	// 创建bookmark，通过插入临时节点标记位置
 	createBookmark : function(serialize) {
 		var self = this, doc = self.doc, endNode,
 			startNode = K('<span style="display:none;"></span>', doc)[0];
@@ -2469,6 +2752,7 @@ _extend(KRange, {
 			end : endNode ? (serialize ? '#' + endNode.id : endNode) : null
 		};
 	},
+	// 根据bookmark重新设置range
 	moveToBookmark : function(bookmark) {
 		var self = this, doc = self.doc,
 			start = K(bookmark.start, doc), end = bookmark.end ? K(bookmark.end, doc) : null;
@@ -2491,23 +2775,29 @@ _extend(KRange, {
 		console.log(this.endContainer.nodeType == 3 ? this.endContainer.nodeValue : this.endContainer, this.endOffset);
 	}
 });
+
 function _range(mixed) {
 	if (!mixed.nodeName) {
 		return mixed.constructor === KRange ? mixed : _toRange(mixed);
 	}
 	return new KRange(mixed);
 }
+
 K.RangeClass = KRange;
 K.range = _range;
 K.START_TO_START = _START_TO_START;
 K.START_TO_END = _START_TO_END;
 K.END_TO_END = _END_TO_END;
 K.END_TO_START = _END_TO_START;
+
+
+// original execCommand
 function _nativeCommand(doc, key, val) {
 	try {
 		doc.execCommand(key, false, val);
 	} catch(e) {}
 }
+// original queryCommandValue
 function _nativeCommandValue(doc, key) {
 	var val = '';
 	try {
@@ -2518,10 +2808,12 @@ function _nativeCommandValue(doc, key) {
 	}
 	return val;
 }
+// get current selection of a document
 function _getSel(doc) {
 	var win = _getWin(doc);
 	return _IERANGE ? doc.selection : win.getSelection();
 }
+// get range of current selection
 function _getRng(doc) {
 	var sel = _getSel(doc), rng;
 	try {
@@ -2536,6 +2828,7 @@ function _getRng(doc) {
 	}
 	return rng;
 }
+//将map的复合key转换成单一key
 function _singleKeyMap(map) {
 	var newMap = {}, arr, v;
 	_each(map, function(key, val) {
@@ -2547,6 +2840,7 @@ function _singleKeyMap(map) {
 	});
 	return newMap;
 }
+//判断一个node是否有指定属性或CSS
 function _hasAttrOrCss(knode, map) {
 	return _hasAttrOrCssByKey(knode, map, '*') || _hasAttrOrCssByKey(knode, map);
 }
@@ -2578,6 +2872,7 @@ function _hasAttrOrCssByKey(knode, map, mapKey) {
 	}
 	return false;
 }
+//删除一个node的属性和CSS
 function _removeAttrOrCss(knode, map) {
 	if (knode.type != 1) {
 		return;
@@ -2616,6 +2911,7 @@ function _removeAttrOrCssByKey(knode, map, mapKey) {
 		knode.remove(true);
 	}
 }
+//取得最里面的element
 function _getInnerNode(knode) {
 	var inner = knode;
 	while (inner.first()) {
@@ -2623,12 +2919,17 @@ function _getInnerNode(knode) {
 	}
 	return inner;
 }
+//最里面的element为inline element时返回true
 function _isEmptyNode(knode) {
 	if (knode.type != 1 || knode.isSingle()) {
 		return false;
 	}
 	return knode.html().replace(/<[^>]+>/g, '') === '';
 }
+//merge two wrapper
+//a : <span><strong></strong></span>
+//b : <strong><em></em></strong>
+//result : <span><strong><em></em></strong></span>
 function _mergeWrapper(a, b) {
 	a = a.clone(true);
 	var lastA = _getInnerNode(a), childA = a, merged = false;
@@ -2648,17 +2949,22 @@ function _mergeWrapper(a, b) {
 	}
 	return a;
 }
+//wrap and merge a node
 function _wrapNode(knode, wrapper) {
 	wrapper = wrapper.clone(true);
+	//node为text node时
 	if (knode.type == 3) {
 		_getInnerNode(wrapper).append(knode.clone(false));
 		knode.replaceWith(wrapper);
 		return wrapper;
 	}
+	//node为element时
+	//取得node的wrapper
 	var nodeWrapper = knode, child;
 	while ((child = knode.first()) && child.children().length == 1) {
 		knode = child;
 	}
+	//将node的子节点纳入在一个documentFragment里
 	child = knode.first();
 	var frag = knode.doc.createDocumentFragment();
 	while (child) {
@@ -2672,6 +2978,7 @@ function _wrapNode(knode, wrapper) {
 	nodeWrapper.replaceWith(wrapper);
 	return wrapper;
 }
+//merge attributes and styles
 function _mergeAttrs(knode, attrs, styles) {
 	_each(attrs, function(key, val) {
 		if (key !== 'style') {
@@ -2682,6 +2989,7 @@ function _mergeAttrs(knode, attrs, styles) {
 		knode.css(key, val);
 	});
 }
+// 判断node是否在pre、style、script里
 function _inPreElement(knode) {
 	while (knode && knode.name != 'body') {
 		if (_PRE_TAG_MAP[knode.name] || knode.name == 'div' && knode.hasClass('ke-script')) {
@@ -2691,6 +2999,7 @@ function _inPreElement(knode) {
 	}
 	return false;
 }
+// create KCmd class
 function KCmd(range) {
 	this.init(range);
 }
@@ -2723,6 +3032,7 @@ _extend(KCmd, {
 			sc = range.startContainer, so = range.startOffset,
 			ec = range.endContainer, eo = range.endOffset,
 			doc = _getDoc(sc), win = self.win, rng, hasU200b = false;
+		// tag内部无内容时选中tag内部，<tagName>[]</tagName>
 		if (hasDummy && sc.nodeType == 1 && range.collapsed) {
 			if (_IERANGE) {
 				var dummy = K('<span>&nbsp;</span>', doc);
@@ -2745,6 +3055,7 @@ _extend(KCmd, {
 				}
 			}
 		}
+		//other case
 		if (_IERANGE) {
 			try {
 				rng = range.get(true);
@@ -2757,6 +3068,7 @@ _extend(KCmd, {
 			rng = range.get(true);
 			sel.removeAllRanges();
 			sel.addRange(rng);
+			// Bugfix: https://github.com/kindsoft/kindeditor/issues/54
 			if (doc !== document) {
 				var pos = K(rng.endContainer).pos();
 				win.scrollTo(pos.x, pos.y);
@@ -2768,13 +3080,16 @@ _extend(KCmd, {
 	wrap : function(val) {
 		var self = this, doc = self.doc, range = self.range, wrapper;
 		wrapper = K(val, doc);
+		// collapsed=true
 		if (range.collapsed) {
 			range.shrink();
 			range.insertNode(wrapper[0]).selectNodeContents(wrapper[0]);
 			return self;
 		}
+		// block wrapper
 		if (wrapper.isBlock()) {
 			var copyWrapper = wrapper.clone(true), child = copyWrapper;
+			// find inner element
 			while (child.first()) {
 				child = child.first();
 			}
@@ -2782,6 +3097,7 @@ _extend(KCmd, {
 			range.insertNode(copyWrapper[0]).selectNode(copyWrapper[0]);
 			return self;
 		}
+		// collapsed=false
 		range.enlarge();
 		var bookmark = range.createBookmark(), ancestor = range.commonAncestor(), isStart = false;
 		K(ancestor).scan(function(node) {
@@ -2798,6 +3114,7 @@ _extend(KCmd, {
 					return;
 				}
 				if (knode.type == 3 && _trim(node.nodeValue).length > 0) {
+					// textNode为唯一的子节点时，重新设置node
 					var parent;
 					while ((parent = knode.parent()) && parent.isStyle() && parent.children().length == 1) {
 						knode = parent;
@@ -2811,6 +3128,7 @@ _extend(KCmd, {
 	},
 	split : function(isStart, map) {
 		var range = this.range, doc = range.doc;
+		//get parent node
 		var tempRange = range.cloneRange().collapse(isStart);
 		var node = tempRange.startContainer, pos = tempRange.startOffset,
 			parent = node.nodeType == 3 ? node.parentNode : node,
@@ -2832,6 +3150,7 @@ _extend(KCmd, {
 			needSplit = true;
 			parent = parent.parentNode;
 		}
+		//split parent node
 		if (needSplit) {
 			var dummy = doc.createElement('span');
 			range.cloneRange().collapse(!isStart).insertNode(dummy);
@@ -2849,10 +3168,12 @@ _extend(KCmd, {
 				parent.appendChild(frag);
 				range.setStartBefore(dummy).setEndBefore(first);
 			}
+			//调整endOffset
 			var dummyParent = dummy.parentNode;
 			if (dummyParent == range.endContainer) {
 				var prev = K(dummy).prev(), next = K(dummy).next();
 				if (prev && next && prev.type == 3 && next.type == 3) {
+					//dummy元素的左右都是textNode，<strong>f<span></span>g</strong>
 					range.setEnd(prev[0], prev[0].nodeValue.length);
 				} else if (!isStart) {
 					range.setEnd(range.endContainer, range.endOffset - 1);
@@ -2865,12 +3186,14 @@ _extend(KCmd, {
 	remove : function(map) {
 		var self = this, doc = self.doc, range = self.range;
 		range.enlarge();
+		// <p><strong><em>[123456789]</em></strong></p>, remove strong
 		if (range.startOffset === 0) {
 			var ksc = K(range.startContainer), parent;
 			while ((parent = ksc.parent()) && parent.isStyle() && parent.children().length == 1) {
 				ksc = parent;
 			}
 			range.setStart(ksc[0], 0);
+			// <p style="color:red;">[abcd</p>, remove style
 			ksc = K(range.startContainer);
 			if (ksc.isBlock()) {
 				_removeAttrOrCss(ksc, map);
@@ -2881,8 +3204,10 @@ _extend(KCmd, {
 			}
 		}
 		var sc, so;
+		// collapsed == true
 		if (range.collapsed) {
 			self.split(true, map);
+			// remove empty element
 			sc = range.startContainer;
 			so = range.startOffset;
 			if (so > 0) {
@@ -2896,6 +3221,7 @@ _extend(KCmd, {
 			if (sa && _isEmptyNode(sa)) {
 				sa.remove();
 			}
+			// <strong>|</strong>
 			if (_isEmptyNode(sc)) {
 				range.startBefore(sc);
 				sc.remove();
@@ -2903,11 +3229,14 @@ _extend(KCmd, {
 			range.collapse(true);
 			return self;
 		}
+		// split range
 		self.split(true, map);
 		self.split(false, map);
+		// insert dummy element
 		var startDummy = doc.createElement('span'), endDummy = doc.createElement('span');
 		range.cloneRange().collapse(false).insertNode(endDummy);
 		range.cloneRange().collapse(true).insertNode(startDummy);
+		// select element
 		var nodeList = [], cmpStart = false;
 		K(range.commonAncestor()).scan(function(node) {
 			if (!cmpStart && node == startDummy) {
@@ -2921,8 +3250,10 @@ _extend(KCmd, {
 				nodeList.push(node);
 			}
 		});
+		// remove dummy element
 		K(startDummy).remove();
 		K(endDummy).remove();
+		// remove empty element
 		sc = range.startContainer;
 		so = range.startOffset;
 		var ec = range.endContainer, eo = range.endOffset;
@@ -2935,6 +3266,8 @@ _extend(KCmd, {
 					range.setEnd(ec, eo - 1);
 				}
 			}
+			// <b>abc[</b><b>def]</b><b>ghi</b>，分割后HTML变成
+			// <b>abc</b>[<b></b><b>def</b>]<b>ghi</b>
 			var startAfter = K(sc.childNodes[so]);
 			if (startAfter && _isEmptyNode(startAfter)) {
 				startAfter.remove();
@@ -2948,6 +3281,7 @@ _extend(KCmd, {
 			endAfter.remove();
 		}
 		var bookmark = range.createBookmark(true);
+		// remove attributes or styles
 		_each(nodeList, function(i, node) {
 			_removeAttrOrCss(K(node), map);
 		});
@@ -2977,6 +3311,8 @@ _extend(KCmd, {
 		if (cNode) {
 			return cNode;
 		}
+		//<strong>123</strong>|4567
+		//<strong>123</strong>|<br />
 		if (node.nodeType == 1 || (ec.nodeType == 3 && eo === 0)) {
 			var prev = K(node).prev();
 			if (prev) {
@@ -3008,6 +3344,8 @@ _extend(KCmd, {
 		}
 		return null;
 	},
+	// Reference: document.queryCommandState
+	// TODO
 	state : function(key) {
 		var self = this, doc = self.doc, bool = false;
 		try {
@@ -3015,6 +3353,7 @@ _extend(KCmd, {
 		} catch (e) {}
 		return bool;
 	},
+	// Reference: document.queryCommandValue
 	val : function(key) {
 		var self = this, doc = self.doc, range = self.range;
 		function lc(val) {
@@ -3108,18 +3447,33 @@ _extend(KCmd, {
 	},
 	forecolor : function(val) {
 		return this.wrap('<span style="color:' + val + ';"></span>').select();
+		// return this.toggle('<span style="color:' + val + ';"></span>', {
+		// 	span : '.color=' + val,
+		// 	font : 'color'
+		// });
 	},
 	hilitecolor : function(val) {
 		return this.wrap('<span style="background-color:' + val + ';"></span>').select();
+		// return this.toggle('<span style="background-color:' + val + ';"></span>', {
+		// 	span : '.background-color=' + val
+		// });
 	},
 	fontsize : function(val) {
 		return this.wrap('<span style="font-size:' + val + ';"></span>').select();
+		// return this.toggle('<span style="font-size:' + val + ';"></span>', {
+		// 	span : '.font-size=' + val,
+		// 	font : 'size'
+		// });
 	},
 	fontname : function(val) {
 		return this.fontfamily(val);
 	},
 	fontfamily : function(val) {
 		return this.wrap('<span style="font-family:' + val + ';"></span>').select();
+		// return this.toggle('<span style="font-family:' + val + ';"></span>', {
+		// 	span : '.font-family=' + val,
+		// 	font : 'face'
+		// });
 	},
 	removeformat : function() {
 		var map = {
@@ -3137,6 +3491,10 @@ _extend(KCmd, {
 		if (val === '') {
 			return self;
 		}
+		//if (_inPreElement(K(range.startContainer))) {
+		//	return self;
+		//}
+		// IE专用，优化性能
 		function pasteHtml(range, val) {
 			val = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + val;
 			var rng = range.get();
@@ -3152,6 +3510,7 @@ _extend(KCmd, {
 			range.collapse(false);
 			self.select(false);
 		}
+		// 全浏览器兼容，在IE上速度慢
 		function insertHtml(range, val) {
 			var doc = range.doc,
 				frag = doc.createDocumentFragment();
@@ -3233,6 +3592,8 @@ _extend(KCmd, {
 				K(node).removeAttr('target');
 			}
 		}
+		// Bugfix: https://github.com/kindsoft/kindeditor/issues/117
+		// [IE] 当两个A标签并排在一起中间没有别的内容，修改后面的链接地址时，前面的链接地址也被改掉。
 		var sc = range.startContainer, so = range.startOffset,
 			ec = range.endContainer, eo = range.endOffset;
 		if (sc.nodeType == 1 && sc === ec && so + 1 === eo) {
@@ -3270,21 +3631,25 @@ _extend(KCmd, {
 		return self;
 	}
 });
+
 _each(('formatblock,selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,' +
 	'insertunorderedlist,indent,outdent,subscript,superscript').split(','), function(i, name) {
 	KCmd.prototype[name] = function(val) {
 		var self = this;
 		self.select();
 		_nativeCommand(self.doc, name, val);
+		// Bugfix: [IE] 先选中图片后居中，再左对齐，光标跳到顶部
 		if (_IERANGE && _inArray(name, 'justifyleft,justifycenter,justifyright,justifyfull'.split(',')) >= 0) {
 			self.selection();
 		}
+		// 在webkit和firefox上需要重新选取range，否则有时候会报错
 		if (!_IERANGE || _inArray(name, 'formatblock,selectall,insertorderedlist,insertunorderedlist'.split(',')) >= 0) {
 			self.selection();
 		}
 		return self;
 	};
 });
+
 _each('cut,copy,paste'.split(','), function(i, name) {
 	KCmd.prototype[name] = function() {
 		var self = this;
@@ -3296,24 +3661,33 @@ _each('cut,copy,paste'.split(','), function(i, name) {
 		return self;
 	};
 });
+
 function _cmd(mixed) {
+	// mixed is a node
 	if (mixed.nodeName) {
 		var doc = _getDoc(mixed);
 		mixed = _range(doc).selectNodeContents(doc.body).collapse(false);
 	}
+	// mixed is a KRange
 	return new KCmd(mixed);
 }
+
 K.CmdClass = KCmd;
 K.cmd = _cmd;
+
+
 function _drag(options) {
 	var moveEl = options.moveEl,
 		moveFn = options.moveFn,
 		clickEl = options.clickEl || moveEl,
 		beforeDrag = options.beforeDrag,
 		iframeFix = options.iframeFix === undefined ? true : options.iframeFix;
+
 	var docs = [document];
+
 	if (iframeFix) {
 		K('iframe').each(function() {
+			// 判断是否跨域
 			var src = _formatUrl(this.src || '', 'absolute');
 			if (/^https?:\/\//.test(src)) {
 				return;
@@ -3330,8 +3704,10 @@ function _drag(options) {
 			}
 		});
 	}
+
 	clickEl.mousedown(function(e) {
 		e.stopPropagation();
+
 		var self = clickEl.get(),
 			x = _removeUnit(moveEl.css('left')),
 			y = _removeUnit(moveEl.css('top')),
@@ -3339,9 +3715,11 @@ function _drag(options) {
 			height = moveEl.height(),
 			pageX = e.pageX,
 			pageY = e.pageY;
+
 		if (beforeDrag) {
 			beforeDrag();
 		}
+
 		function moveListener(e) {
 			e.preventDefault();
 			var kdoc = K(_getDoc(e.target));
@@ -3349,9 +3727,11 @@ function _drag(options) {
 			var diffY = _round((kdoc.data('pos-y') || 0) + e.pageY - pageY);
 			moveFn.call(clickEl, x, y, width, height, diffX, diffY);
 		}
+
 		function selectListener(e) {
 			e.preventDefault();
 		}
+
 		function upListener(e) {
 			e.preventDefault();
 			K(docs).unbind('mousemove', moveListener)
@@ -3361,20 +3741,26 @@ function _drag(options) {
 				self.releaseCapture();
 			}
 		}
+
+		// bind event
 		K(docs).mousemove(moveListener)
 			.mouseup(upListener)
 			.bind('selectstart', selectListener);
+
 		if (self.setCapture) {
 			self.setCapture();
 		}
 	});
 }
+
+// create KWidget class
 function KWidget(options) {
 	this.init(options);
 }
 _extend(KWidget, {
 	init : function(options) {
 		var self = this;
+		// public properties
 		self.name = options.name || '';
 		self.doc = options.doc || document;
 		self.win = _getWin(self.doc);
@@ -3385,6 +3771,7 @@ _extend(KWidget, {
 		self.height = _addUnit(options.height);
 		self.div = K('<div style="display:block;"></div>');
 		self.options = options;
+		// pravate properties
 		self._alignEl = options.alignEl;
 		if (self.width) {
 			self.div.css('width', self.width);
@@ -3470,6 +3857,7 @@ _extend(KWidget, {
 			x = _round(scrollPos.x + (docEl.clientWidth - w) / 2);
 			y = _round(scrollPos.y + (docEl.clientHeight - h) / 2);
 		}
+		// 用position:fixed后不需要添加scroll坐标
 		if (!(_IE && _V < 7 || _QUIRKS)) {
 			x -= scrollPos.x;
 			y -= scrollPos.y;
@@ -3512,19 +3900,25 @@ _extend(KWidget, {
 		return self;
 	}
 });
+
 function _widget(options) {
 	return new KWidget(options);
 }
+
 K.WidgetClass = KWidget;
 K.widget = _widget;
+
+
 function _iframeDoc(iframe) {
 	iframe = _get(iframe);
 	return iframe.contentDocument || iframe.contentWindow.document;
 }
+
 var html, _direction = '';
 if ((html = document.getElementsByTagName('html'))) {
 	_direction = html[0].dir;
 }
+
 function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 	var arr = [
 		(_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
@@ -3595,10 +3989,13 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 	arr.push('</head><body ' + (bodyClass ? 'class="' + bodyClass + '"' : '') + '></body></html>');
 	return arr.join('\n');
 }
+
 function _elementVal(knode, val) {
 	if (knode.hasVal()) {
 		if (val === undefined) {
 			var html = knode.val();
+			// 去除内容为空的p标签
+			// https://github.com/kindsoft/kindeditor/pull/52
 			html = html.replace(/(<(?:p|p\s[^>]*)>) *(<\/p>)/ig, '');
 			return html;
 		}
@@ -3606,6 +4003,8 @@ function _elementVal(knode, val) {
 	}
 	return knode.html(val);
 }
+
+// create KEdit class
 function KEdit(options) {
 	this.init(options);
 }
@@ -3613,12 +4012,14 @@ _extend(KEdit, KWidget, {
 	init : function(options) {
 		var self = this;
 		KEdit.parent.init.call(self, options);
+
 		self.srcElement = K(options.srcElement);
 		self.div.addClass('ke-edit');
 		self.designMode = _undef(options.designMode, true);
 		self.beforeGetHtml = options.beforeGetHtml;
 		self.beforeSetHtml = options.beforeSetHtml;
 		self.afterSetHtml = options.afterSetHtml;
+
 		var themesPath = _undef(options.themesPath, ''),
 			bodyClass = options.bodyClass,
 			cssPath = options.cssPath,
@@ -3628,11 +4029,12 @@ _extend(KEdit, KWidget, {
 				(isDocumentDomain ? 'document.domain="' + document.domain + '";' : '') +
 				'document.close();'),
 			iframeSrc = _IE ? ' src="javascript:void(function(){' + encodeURIComponent(srcScript) + '}())"' : '';
-		self.iframe = K('<iframe class="ke-edit-iframe" hidefocus="true" frameborder="0"' + iframeSrc + '></iframe>').css('width', '100%');
+		self.iframe = K('<iframe class="ke-edit-iframe" allowtransparency="true" hidefocus="true" frameborder="0"' + iframeSrc + '></iframe>').css('width', '100%');
 		self.textarea = K('<textarea class="ke-edit-textarea" hidefocus="true"></textarea>').css('width', '100%');
 		self.tabIndex = isNaN(parseInt(options.tabIndex, 10)) ? self.srcElement.attr('tabindex') : parseInt(options.tabIndex, 10);
 		self.iframe.attr('tabindex', self.tabIndex);
 		self.textarea.attr('tabindex', self.tabIndex);
+
 		if (self.width) {
 			self.setWidth(self.width);
 		}
@@ -3655,9 +4057,11 @@ _extend(KEdit, KWidget, {
 			self.win = self.iframe[0].contentWindow;
 			self.doc = doc;
 			var cmd = _cmd(doc);
+			// add events
 			self.afterChange(function(e) {
 				cmd.selection();
 			});
+			// [WEBKIT] select an image after click the image
 			if (_WEBKIT) {
 				K(doc).click(function(e) {
 					if (K(e.target).name === 'img') {
@@ -3668,6 +4072,7 @@ _extend(KEdit, KWidget, {
 				});
 			}
 			if (_IE) {
+				// Fix bug: https://github.com/kindsoft/kindeditor/issues/53
 				self._mousedownHandler = function() {
 					var newRange = cmd.range.cloneRange();
 					newRange.shrink();
@@ -3676,6 +4081,7 @@ _extend(KEdit, KWidget, {
 					}
 				};
 				K(document).mousedown(self._mousedownHandler);
+				// [IE] bug: clear iframe when press backspase key
 				K(doc).keydown(function(e) {
 					if (e.which == 8) {
 						cmd.selection();
@@ -3729,6 +4135,7 @@ _extend(KEdit, KWidget, {
 		self.height = val;
 		self.div.css('height', val);
 		self.iframe.css('height', val);
+		// 校正IE6和IE7的textarea高度
 		if ((_IE && _V < 8) || _QUIRKS) {
 			val = _addUnit(_removeUnit(val) - 2);
 		}
@@ -3737,12 +4144,14 @@ _extend(KEdit, KWidget, {
 	},
 	remove : function() {
 		var self = this, doc = self.doc;
+		// remove events
 		K(doc.body).unbind();
 		K(doc).unbind();
 		K(self.win).unbind();
 		if (self._mousedownHandler) {
 			K(document).unbind('mousedown', self._mousedownHandler);
 		}
+		// remove elements
 		_elementVal(self.srcElement, self.html());
 		self.srcElement.show();
 		doc.write('');
@@ -3752,8 +4161,10 @@ _extend(KEdit, KWidget, {
 	},
 	html : function(val, isFull) {
 		var self = this, doc = self.doc;
+		// design mode
 		if (self.designMode) {
 			var body = doc.body;
+			// get
 			if (val === undefined) {
 				if (isFull) {
 					val = '<!doctype html><html>' + body.parentNode.innerHTML + '</html>';
@@ -3763,14 +4174,17 @@ _extend(KEdit, KWidget, {
 				if (self.beforeGetHtml) {
 					val = self.beforeGetHtml(val);
 				}
+				// bugfix: Firefox自动生成一个br标签
 				if (_GECKO && val == '<br />') {
 					val = '';
 				}
 				return val;
 			}
+			// set
 			if (self.beforeSetHtml) {
 				val = self.beforeSetHtml(val);
 			}
+			// IE9 Bugfix: https://github.com/kindsoft/kindeditor/issues/62
 			if (_IE && _V >= 9) {
 				val = val.replace(/(<.*?checked=")checked(".*>)/ig, '$1$2');
 			}
@@ -3780,6 +4194,7 @@ _extend(KEdit, KWidget, {
 			}
 			return self;
 		}
+		// source mode
 		if (val === undefined) {
 			return self.textarea.val();
 		}
@@ -3843,12 +4258,16 @@ _extend(KEdit, KWidget, {
 		return self;
 	}
 });
+
 function _edit(options) {
 	return new KEdit(options);
 }
+
 K.EditClass = KEdit;
 K.edit = _edit;
 K.iframeDoc = _iframeDoc;
+
+
 function _selectToolbar(name, fn) {
 	var self = this,
 		knode = self.get(name);
@@ -3859,6 +4278,8 @@ function _selectToolbar(name, fn) {
 		fn(knode);
 	}
 }
+
+// create KToolbar class
 function KToolbar(options) {
 	this.init(options);
 }
@@ -3910,6 +4331,7 @@ _extend(KToolbar, KWidget, {
 		});
 	},
 	get : function(name) {
+		// cache
 		if (this._itemMap[name]) {
 			return this._itemMap[name];
 		}
@@ -3950,6 +4372,7 @@ _extend(KToolbar, KWidget, {
 		if (noDisableItems) {
 			map = _toMap(noDisableItems);
 		}
+		// disable toolbar
 		if (bool === undefined ? !self.disableMode : bool) {
 			K('span.ke-outline', self.div).each(function() {
 				var knode = K(this),
@@ -3959,6 +4382,7 @@ _extend(KToolbar, KWidget, {
 				}
 			});
 			self.disableMode = true;
+		// enable toolbar
 		} else {
 			K('span.ke-outline', self.div).each(function() {
 				var knode = K(this),
@@ -3972,11 +4396,16 @@ _extend(KToolbar, KWidget, {
 		return self;
 	}
 });
+
 function _toolbar(options) {
 	return new KToolbar(options);
 }
+
 K.ToolbarClass = KToolbar;
 K.toolbar = _toolbar;
+
+
+// create KMenu class
 function KMenu(options) {
 	this.init(options);
 }
@@ -4053,11 +4482,16 @@ _extend(KMenu, KWidget, {
 		return self;
 	}
 });
+
 function _menu(options) {
 	return new KMenu(options);
 }
+
 K.MenuClass = KMenu;
 K.menu = _menu;
+
+
+// create KColorPicker class
 function KColorPicker(options) {
 	this.init(options);
 }
@@ -4128,11 +4562,15 @@ _extend(KColorPicker, KWidget, {
 		return self;
 	}
 });
+
 function _colorpicker(options) {
 	return new KColorPicker(options);
 }
+
 K.ColorPickerClass = KColorPicker;
 K.colorpicker = _colorpicker;
+
+
 function KUploadButton(options) {
 	this.init(options);
 }
@@ -4149,10 +4587,12 @@ _extend(KUploadButton, {
 		options.afterError = options.afterError || function(str) {
 			alert(str);
 		};
+
 		var hiddenElements = [];
 		for(var k in extraParams){
 			hiddenElements.push('<input type="hidden" name="' + k + '" value="' + extraParams[k] + '" />');
 		}
+
 		var html = [
 			'<div class="ke-inline-block ' + cls + '">',
 			(options.target ? '' : '<iframe name="' + target + '" style="display:none;"></iframe>'),
@@ -4164,9 +4604,11 @@ _extend(KUploadButton, {
 			'<input type="file" class="ke-upload-file" name="' + fieldName + '" tabindex="-1" />',
 			(options.form ? '</div>' : '</form>'),
 			'</div>'].join('');
+
 		var div = K(html, button.doc);
 		button.hide();
 		button.before(div);
+
 		self.div = div;
 		self.button = button;
 		self.iframe = options.target ? K('iframe[name="' + target + '"]') : K('iframe', div);
@@ -4181,11 +4623,13 @@ _extend(KUploadButton, {
 			iframe = self.iframe;
 		iframe.bind('load', function() {
 			iframe.unbind();
+			// 清空file
 			var tempForm = document.createElement('form');
 			self.fileBox.before(tempForm);
 			K(tempForm).append(self.fileBox);
 			tempForm.reset();
 			K(tempForm).remove(true);
+
 			var doc = K.iframeDoc(iframe),
 				pre = doc.getElementsByTagName('pre')[0],
 				str = '', data;
@@ -4194,7 +4638,9 @@ _extend(KUploadButton, {
 			} else {
 				str = doc.body.innerHTML;
 			}
+			// Bugfix: https://github.com/kindsoft/kindeditor/issues/81
 			str = _unescape(str);
+			// Bugfix: [IE] 上传图片后，进度条一直处于加载状态。
 			iframe[0].src = 'javascript:false';
 			try {
 				data = K.json(str);
@@ -4213,17 +4659,24 @@ _extend(KUploadButton, {
 		if (self.fileBox) {
 			self.fileBox.unbind();
 		}
+		// Bugfix: [IE] 上传图片后，进度条一直处于加载状态。
+		//self.iframe[0].src = 'javascript:false';
 		self.iframe.remove();
 		self.div.remove();
 		self.button.show();
 		return self;
 	}
 });
+
 function _uploadbutton(options) {
 	return new KUploadButton(options);
 }
+
 K.UploadButtonClass = KUploadButton;
 K.uploadbutton = _uploadbutton;
+
+
+
 function _createButton(arg) {
 	arg = arg || {};
 	var name = arg.name || '',
@@ -4235,6 +4688,8 @@ function _createButton(arg) {
 	span.append(btn);
 	return span;
 }
+
+// create KToolbar class
 function KDialog(options) {
 	this.init(options);
 }
@@ -4253,6 +4708,7 @@ _extend(KDialog, KWidget, {
 			noBtn = options.noBtn,
 			closeBtn = options.closeBtn,
 			showMask = _undef(options.showMask, true);
+
 		self.div.addClass('ke-dialog').bind('click,mousedown', function(e){
 			e.stopPropagation();
 		});
@@ -4348,29 +4804,36 @@ _extend(KDialog, KWidget, {
 		self.bodyDiv.unbind();
 		self.headerDiv.unbind();
 		K('iframe', self.div).each(function() {
+			//this.src = 'javascript:false';
 			K(this).remove();
 		});
 		KDialog.parent.remove.call(self);
 		return self;
 	}
 });
+
 function _dialog(options) {
 	return new KDialog(options);
 }
+
 K.DialogClass = KDialog;
 K.dialog = _dialog;
+
+
 function _tabs(options) {
 	var self = _widget(options),
 		remove = self.remove,
 		afterSelect = options.afterSelect,
 		div = self.div,
 		liList = [];
+	//create tabs
 	div.addClass('ke-tabs')
 		.bind('contextmenu,mousedown,mousemove', function(e) {
 			e.preventDefault();
 		});
 	var ul = K('<ul class="ke-tabs-ul ke-clearfix"></ul>');
 	div.append(ul);
+	//add a tab
 	self.add = function(tab) {
 		var li = K('<li class="ke-tabs-li">' + tab.title + '</li>');
 		li.data('tab', tab);
@@ -4378,6 +4841,7 @@ function _tabs(options) {
 		ul.append(li);
 	};
 	self.selectedIndex = 0;
+	//select a tab
 	self.select = function(index) {
 		self.selectedIndex = index;
 		_each(liList, function(i, li) {
@@ -4403,6 +4867,7 @@ function _tabs(options) {
 			afterSelect.call(self, index);
 		}
 	};
+	//remove tabs
 	self.remove = function() {
 		_each(liList, function() {
 			this.remove();
@@ -4412,7 +4877,10 @@ function _tabs(options) {
 	};
 	return self;
 }
+
 K.tabs = _tabs;
+
+
 function _loadScript(url, fn) {
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		script = document.createElement('script');
@@ -4429,10 +4897,13 @@ function _loadScript(url, fn) {
 		}
 	};
 }
+
+// 移除URL里的GET参数
 function _chopQuery(url) {
 	var index = url.indexOf('?');
 	return index > 0 ? url.substr(0, index) : url;
 }
+
 function _loadStyle(url) {
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		link = document.createElement('link'),
@@ -4447,9 +4918,10 @@ function _loadStyle(url) {
 	link.href = url;
 	link.rel = 'stylesheet';
 }
+
 function _ajax(url, fn, method, param, dataType) {
-	method = method || 'GET';
-	dataType = dataType || 'json';
+	method = method || 'GET'; //POST or GET
+	dataType = dataType || 'json'; //json or html
 	var xhr = window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 	xhr.open(method, url, true);
 	xhr.onreadystatechange = function () {
@@ -4476,10 +4948,14 @@ function _ajax(url, fn, method, param, dataType) {
 		xhr.send(null);
 	}
 }
+
 K.loadScript = _loadScript;
 K.loadStyle = _loadStyle;
 K.ajax = _ajax;
+
+
 var _plugins = {};
+
 function _plugin(name, fn) {
 	if (name === undefined) {
 		return _plugins;
@@ -4489,7 +4965,9 @@ function _plugin(name, fn) {
 	}
 	_plugins[name] = fn;
 }
+
 var _language = {};
+
 function _parseLangKey(key) {
 	var match, ns = 'core';
 	if ((match = /^(\w+)\.(\w+)$/.exec(key))) {
@@ -4498,6 +4976,17 @@ function _parseLangKey(key) {
 	}
 	return { ns : ns, key : key };
 }
+/**
+	@example
+	K.lang('about'); //get core.about
+	K.lang('about.version'); // get about.version
+	K.lang('about.').version; // get about.version
+	K.lang('about', 'en'); //get English core.about
+	K.lang({
+		core.about : '关于',
+		about.version : '4.0'
+	}, 'zh_CN'); //add language
+*/
 function _lang(mixed, langType) {
 	langType = langType === undefined ? K.options.langType : langType;
 	if (typeof mixed === 'string') {
@@ -4522,6 +5011,8 @@ function _lang(mixed, langType) {
 		_language[langType][obj.ns][obj.key] = val;
 	});
 }
+
+// 当前range为图片时返回KNode，否则返回undefined
 function _getImageFromRange(range, fn) {
 	if (range.collapsed) {
 		return;
@@ -4539,6 +5030,7 @@ function _getImageFromRange(range, fn) {
 		return img;
 	}
 }
+
 function _bindContextmenuEvent() {
 	var self = this, doc = self.edit.doc;
 	K(doc).contextmenu(function(e) {
@@ -4593,6 +5085,7 @@ function _bindContextmenuEvent() {
 					menu.addItem(this);
 				}
 			});
+			// 下拉菜单超过可视区域时调整菜单位置
 			var docEl = _docElement(menu.doc),
 				menuHeight = menu.div.height();
 			if (e.clientY + menuHeight >= docEl.clientHeight - 100) {
@@ -4603,6 +5096,7 @@ function _bindContextmenuEvent() {
 		}
 	});
 }
+
 function _bindNewlineEvent() {
 	var self = this, doc = self.edit.doc, newlineTag = self.newlineTag;
 	if (_IE && newlineTag !== 'br') {
@@ -4616,6 +5110,7 @@ function _bindNewlineEvent() {
 	}
 	var brSkipTagMap = _toMap('h1,h2,h3,h4,h5,h6,pre,li'),
 		pSkipTagMap = _toMap('p,h1,h2,h3,h4,h5,h6,pre,li,blockquote');
+	// 取得range的block标签名
 	function getAncestorTagName(range) {
 		var ancestor = K(range.commonAncestor());
 		while (ancestor) {
@@ -4635,11 +5130,13 @@ function _bindNewlineEvent() {
 		if (tagName == 'marquee' || tagName == 'select') {
 			return;
 		}
+		// br
 		if (newlineTag === 'br' && !brSkipTagMap[tagName]) {
 			e.preventDefault();
 			self.insertHtml('<br />' + (_IE && _V < 9 ? '' : '\u200B'));
 			return;
 		}
+		// p
 		if (!pSkipTagMap[tagName]) {
 			_nativeCommand(doc, 'formatblock', '<p>');
 		}
@@ -4669,6 +5166,7 @@ function _bindNewlineEvent() {
 		if (!pSkipTagMap[tagName]) {
 			_nativeCommand(doc, 'formatblock', '<p>');
 		}
+		// [WEBKIT] 将DIV改成P
 		var div = self.cmd.commonAncestor('div');
 		if (div) {
 			var p = K('<p></p>'),
@@ -4685,6 +5183,7 @@ function _bindNewlineEvent() {
 		}
 	});
 }
+
 function _bindTabEvent() {
 	var self = this, doc = self.edit.doc;
 	K(doc).keydown(function(e) {
@@ -4696,6 +5195,7 @@ function _bindTabEvent() {
 			}
 			var cmd = self.cmd, range = cmd.range;
 			range.shrink();
+			// Bugfix #271: 回车，按下tab键，光标在下一行显示
 			if (range.collapsed && range.startContainer.nodeType == 1) {
 				range.insertNode(K('@&nbsp;', doc)[0]);
 				cmd.select();
@@ -4704,6 +5204,7 @@ function _bindTabEvent() {
 		}
 	});
 }
+
 function _bindFocusEvent() {
 	var self = this;
 	K(self.edit.textarea[0], self.edit.win).focus(function(e) {
@@ -4716,12 +5217,15 @@ function _bindFocusEvent() {
 		}
 	});
 }
+
 function _removeBookmarkTag(html) {
 	return _trim(html.replace(/<span [^>]*id="?__kindeditor_bookmark_\w+_\d+__"?[^>]*><\/span>/ig, ''));
 }
+
 function _removeTempTag(html) {
 	return html.replace(/<div[^>]+class="?__kindeditor_paste__"?[^>]*>[\s\S]*?<\/div>/ig, '');
 }
+
 function _addBookmarkToStack(stack, bookmark) {
 	if (stack.length === 0) {
 		stack.push(bookmark);
@@ -4732,6 +5236,9 @@ function _addBookmarkToStack(stack, bookmark) {
 		stack.push(bookmark);
 	}
 }
+
+// undo: _undoToRedo.call(this, undoStack, redoStack);
+// redo: _undoToRedo.call(this, redoStack, undoStack);
 function _undoToRedo(fromStack, toStack) {
 	var self = this, edit = self.edit,
 		body = edit.doc.body,
@@ -4764,8 +5271,10 @@ function _undoToRedo(fromStack, toStack) {
 	}
 	return self;
 }
+
 function KEditor(options) {
 	var self = this;
+	// save original options
 	self.options = {};
 	function setOption(key, val) {
 		if (KEditor.prototype[key] === undefined) {
@@ -4773,9 +5282,11 @@ function KEditor(options) {
 		}
 		self.options[key] = val;
 	}
+	// set options from param
 	_each(options, function(key, val) {
 		setOption(key, options[key]);
 	});
+	// set options from default setting
 	_each(K.options, function(key, val) {
 		if (self[key] === undefined) {
 			setOption(key, val);
@@ -4799,6 +5310,7 @@ function KEditor(options) {
 	self.initContent = '';
 	self.plugin = {};
 	self.isCreated = false;
+	// private properties
 	self._handlers = {};
 	self._contextmenus = [];
 	self._undoStack = [];
@@ -4807,6 +5319,7 @@ function KEditor(options) {
 	self.menu = self.contextmenu = null;
 	self.dialogs = [];
 }
+
 KEditor.prototype = {
 	lang : function(mixed) {
 		return _lang(mixed, this.langType);
@@ -4814,20 +5327,24 @@ KEditor.prototype = {
 	loadPlugin : function(name, fn) {
 		var self = this;
 		if (_plugins[name]) {
+			// JS加载中，等待JS加载完成
 			if (!_isFunction(_plugins[name])) {
 				setTimeout(function() {
 					self.loadPlugin(name, fn);
 				}, 100);
 				return self;
 			}
+			// JS加载完成
 			_plugins[name].call(self, KindEditor);
 			if (fn) {
 				fn.call(self);
 			}
 			return self;
 		}
+		// 还没加载相关plugin，动态加载
 		_plugins[name] = 'loading';
 		_loadScript(self.pluginsPath + name + '/' + name + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function() {
+			// Fix bug: https://github.com/kindsoft/kindeditor/issues/105
 			setTimeout(function() {
 				if (_plugins[name]) {
 					self.loadPlugin(name, fn);
@@ -4895,10 +5412,12 @@ KEditor.prototype = {
 		if (self.isCreated) {
 			return self;
 		}
+
 		if (self.srcElement.data('kindeditor')) {
 			return self;
 		}
 		self.srcElement.data('kindeditor', 'true');
+
 		if (fullscreenMode) {
 			_docElement().style.overflow = 'hidden';
 		} else {
@@ -4906,6 +5425,7 @@ KEditor.prototype = {
 		}
 		var width = fullscreenMode ? _docElement().clientWidth + 'px' : self.width,
 			height = fullscreenMode ? _docElement().clientHeight + 'px' : self.height;
+		// 校正IE6和IE7的高度
 		if ((_IE && _V < 8) || _QUIRKS) {
 			height = _addUnit(_removeUnit(height) + 2);
 		}
@@ -4931,6 +5451,7 @@ KEditor.prototype = {
 				self._scrollPos = _getScrollPos();
 			}
 			window.scrollTo(0, 0);
+			// bugfix: [WEBKIT] 高度为0时在dialog里无法粘贴文本
 			K(document.body).css({
 				'height' : '1px',
 				'overflow' : 'hidden'
@@ -4939,6 +5460,7 @@ KEditor.prototype = {
 			self._fullscreenExecuted = true;
 		} else {
 			if (self._fullscreenExecuted) {
+				// 恢复文档高度
 				K(document.body).css({
 					'height' : '',
 					'overflow' : ''
@@ -4949,6 +5471,7 @@ KEditor.prototype = {
 				window.scrollTo(self._scrollPos.x, self._scrollPos.y);
 			}
 		}
+		// create toolbar
 		var htmlList = [];
 		K.each(self.items, function(i, name) {
 			if (name == '|') {
@@ -4976,6 +5499,7 @@ KEditor.prototype = {
 				self.clickToolbar(name);
 			}
 		});
+		// create edit
 		var editHeight = _removeUnit(height) - toolbar.div.height();
 		var edit = self.edit = _edit({
 			height : editHeight > 0 && _removeUnit(height) > self.minHeight ? editHeight : self.minHeight,
@@ -4988,6 +5512,7 @@ KEditor.prototype = {
 			cssData : self.cssData,
 			beforeGetHtml : function(html) {
 				html = self.beforeGetHtml(html);
+				// Bugfix: 浏览器后退产生__kindeditor_bookmark_start_0__
 				html = _removeBookmarkTag(_removeTempTag(html));
 				return _formatHtml(html, self.filterMode ? self.htmlTags : null, self.urlType, self.wellFormatMode, self.indentChar);
 			},
@@ -5002,6 +5527,7 @@ KEditor.prototype = {
 			afterCreate : function() {
 				self.edit = edit = this;
 				self.cmd = edit.cmd;
+				// hide menu when click document
 				self._docMousedownFn = function(e) {
 					if (self.menu) {
 						self.hideMenu();
@@ -5012,6 +5538,7 @@ KEditor.prototype = {
 				_bindNewlineEvent.call(self);
 				_bindTabEvent.call(self);
 				_bindFocusEvent.call(self);
+				// afterChange event
 				edit.afterChange(function(e) {
 					if (!edit.designMode) {
 						return;
@@ -5029,6 +5556,7 @@ KEditor.prototype = {
 						}
 					}
 				});
+				// readonly
 				if (self.readonlyMode) {
 					self.readonly();
 				}
@@ -5036,6 +5564,7 @@ KEditor.prototype = {
 				if (self.initContent === '') {
 					self.initContent = self.html();
 				}
+				// Bugfix: 全屏后和还原后光标没有选中之前光标的位置
 				if (self._undoStack.length > 0) {
 					var prev = self._undoStack.pop();
 					if (prev.start) {
@@ -5050,14 +5579,19 @@ KEditor.prototype = {
 				}
 			}
 		});
+		// create statusbar
 		statusbar.removeClass('statusbar').addClass('ke-statusbar')
 			.append('<span class="ke-inline-block ke-statusbar-center-icon"></span>')
 			.append('<span class="ke-inline-block ke-statusbar-right-icon"></span>');
+
+		// remove resize event
 		if (self._fullscreenResizeHandler) {
 			K(window).unbind('resize', self._fullscreenResizeHandler);
 			self._fullscreenResizeHandler = null;
 		}
+		// reset size
 		function initResize() {
+			// Bugfix: 页面刷新后，与第一次访问加载的编译器高度不一致
 			if (statusbar.height() === 0) {
 				setTimeout(initResize, 100);
 				return;
@@ -5065,6 +5599,7 @@ KEditor.prototype = {
 			self.resize(width, height, false);
 		}
 		initResize();
+		// fullscreen mode
 		if (fullscreenMode) {
 			self._fullscreenResizeHandler = function(e) {
 				if (self.isCreated) {
@@ -5081,6 +5616,7 @@ KEditor.prototype = {
 					self._scrollPos = _getScrollPos();
 				});
 			}
+			// bind drag event
 			if (self.resizeType > 0) {
 				_drag({
 					moveEl : container,
@@ -5115,7 +5651,9 @@ KEditor.prototype = {
 			return self;
 		}
 		self.beforeRemove();
+
 		self.srcElement.data('kindeditor', '');
+
 		if (self.menu) {
 			self.hideMenu();
 		}
@@ -5167,6 +5705,7 @@ KEditor.prototype = {
 			return self.isCreated ? self.edit.html() : _elementVal(self.srcElement);
 		}
 		self.isCreated ? self.edit.html(val) : _elementVal(self.srcElement, val);
+		// Bugfix: http://www.kindsoft.net/view.php?bbsid=4&postid=6703&pagenum=1
 		if (self.isCreated) {
 			self.cmd.selection();
 		}
@@ -5213,6 +5752,7 @@ KEditor.prototype = {
 			self.addBookmark(false);
 		}
 		cmd[key].apply(cmd, _toArray(arguments, 1));
+		// 不需要改变工具栏状态，不需要保存bookmark
 		if (changeFlag) {
 			self.updateState();
 			self.addBookmark(false);
@@ -5256,12 +5796,14 @@ KEditor.prototype = {
 		var self = this, edit = self.edit,
 			body = edit.doc.body,
 			html = _removeTempTag(body.innerHTML), bookmark;
+
 		if (checkSize && self._undoStack.length > 0) {
 			var prev = self._undoStack[self._undoStack.length - 1];
 			if (Math.abs(html.length - _removeBookmarkTag(prev.html).length) < self.minChangeSize) {
 				return self;
 			}
 		}
+		// 第一次执行addBookmark时不执行range.createBookmark
 		if (edit.designMode && !self._firstAddBookmark) {
 			var range = self.cmd.range;
 			bookmark = range.createBookmark(true);
@@ -5342,6 +5884,7 @@ KEditor.prototype = {
 			name : self.lang('close'),
 			click : function(e) {
 				self.hideDialog();
+				// IE bugfix: 关闭dialog后，跳转到top
 				if (_IE && self.cmd) {
 					self.cmd.select();
 				}
@@ -5351,6 +5894,7 @@ KEditor.prototype = {
 			name : self.lang(options.yesBtn ? 'no' : 'close'),
 			click : function(e) {
 				self.hideDialog();
+				// IE bugfix: 关闭dialog后，跳转到top
 				if (_IE && self.cmd) {
 					self.cmd.select();
 				}
@@ -5360,11 +5904,15 @@ KEditor.prototype = {
 			options.alignEl = self.container;
 		}
 		options.cls = 'ke-dialog-' + self.themeType;
+
 		if (self.dialogs.length > 0) {
 			var firstDialog = self.dialogs[0],
 				parentDialog = self.dialogs[self.dialogs.length - 1];
+			// 提高mask的z-index
 			firstDialog.setMaskIndex(parentDialog.z + 2);
+			// 提高dialog的z-index
 			options.z = parentDialog.z + 3;
+			// 不显示mask
 			options.showMask = false;
 		}
 		var dialog = _dialog(options);
@@ -5379,6 +5927,7 @@ KEditor.prototype = {
 		if (self.dialogs.length > 0) {
 			var firstDialog = self.dialogs[0],
 				parentDialog = self.dialogs[self.dialogs.length - 1];
+			// 降低mask的z-index
 			firstDialog.setMaskIndex(parentDialog.z - 1);
 		}
 		return self;
@@ -5399,16 +5948,26 @@ KEditor.prototype = {
 		return self;
 	}
 };
+
 function _editor(options) {
 	return new KEditor(options);
 }
+
 _instances = [];
+
+/**
+	@example
+	K.create('textarea');
+	K.create('textarea.class');
+	K.create('#id');
+*/
 function _create(expr, options) {
 	options = options || {};
 	options.basePath = _undef(options.basePath, K.basePath);
 	options.themesPath = _undef(options.themesPath, options.basePath + 'themes/');
 	options.langPath = _undef(options.langPath, options.basePath + 'lang/');
 	options.pluginsPath = _undef(options.pluginsPath, options.basePath + 'plugins/');
+	// 自动加载CSS文件
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
 		_loadStyle(options.themesPath + 'default/default.css');
@@ -5435,14 +5994,17 @@ function _create(expr, options) {
 	options.srcElement = knode[0];
 	var editor = new KEditor(options);
 	_instances.push(editor);
+	// create editor
 	if (_language[editor.langType]) {
 		return create(editor);
 	}
+	// create editor after load lang file
 	_loadScript(editor.langPath + editor.langType + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function() {
 		create(editor);
 	});
 	return editor;
 }
+
 function _eachEditor(expr, fn) {
 	K(expr).each(function(i, el) {
 		K.each(_instances, function(j, editor) {
@@ -5453,51 +6015,63 @@ function _eachEditor(expr, fn) {
 		});
 	});
 }
+
 K.remove = function(expr) {
 	_eachEditor(expr, function(i) {
 		this.remove();
 		_instances.splice(i, 1);
 	});
 };
+
 K.sync = function(expr) {
 	_eachEditor(expr, function() {
 		this.sync();
 	});
 };
+
 K.html = function(expr, val) {
 	_eachEditor(expr, function() {
 		this.html(val);
 	});
 };
+
 K.insertHtml = function(expr, val) {
 	_eachEditor(expr, function() {
 		this.insertHtml(val);
 	});
 };
+
 K.appendHtml = function(expr, val) {
 	_eachEditor(expr, function() {
 		this.appendHtml(val);
 	});
 };
+
+// 解决IE6浏览器重复下载背景图片的问题
 if (_IE && _V < 7) {
 	_nativeCommand(document, 'BackgroundImageCache', true);
 }
+
 K.EditorClass = KEditor;
 K.editor = _editor;
 K.create = _create;
 K.instances = _instances;
 K.plugin = _plugin;
 K.lang = _lang;
+
+// core plugins
 _plugin('core', function(K) {
 	var self = this,
 		shortcutKeys = {
 			undo : 'Z', redo : 'Y', bold : 'B', italic : 'I', underline : 'U', print : 'P', selectall : 'A'
 		};
+	// afterChange
 	self.afterSetHtml(function() {
 		if (self.options.afterChange) {
 			self.options.afterChange.call(self);
 		}
 	});
+	// sync
 	self.afterCreate(function() {
 		if (self.syncType != 'form') {
 			return;
@@ -5512,6 +6086,7 @@ _plugin('core', function(K) {
 		if (hasForm) {
 			el.bind('submit', function(e) {
 				self.sync();
+				// Bugfix: 	Firefox下后退，编辑器数据不保存
 				K(window).bind('unload', function() {
 					self.edit.textarea.remove();
 				});
@@ -5527,6 +6102,7 @@ _plugin('core', function(K) {
 			});
 		}
 	});
+	// source
 	self.clickToolbar('source', function() {
 		if (self.edit.designMode) {
 			self.toolbar.disableAll(true);
@@ -5536,6 +6112,7 @@ _plugin('core', function(K) {
 			self.toolbar.disableAll(false);
 			self.edit.design(true);
 			self.toolbar.unselect('source');
+			// Bugfix: http://www.kindsoft.net/view.php?bbsid=4&postid=7061&pagenum=1
 			if (_GECKO) {
 				setTimeout(function() {
 					self.cmd.selection();
@@ -5551,6 +6128,7 @@ _plugin('core', function(K) {
 			self.toolbar.disableAll(true).select('source');
 		}
 	});
+	// fullscreen
 	self.clickToolbar('fullscreen', function() {
 		self.fullscreen();
 	});
@@ -5559,12 +6137,14 @@ _plugin('core', function(K) {
 		self.afterCreate(function() {
 			K(self.edit.doc, self.edit.textarea).keyup(function(e) {
 				if (e.which == 27) {
+					// bugfix: 在opera 11上无法全屏，必须用setTimeout
 					setTimeout(function() {
 						self.fullscreen();
 					}, 0);
 				}
 			});
 			if (loaded) {
+				// bugfix: 在IE上在代码模式下切换全屏出现奇怪现象
 				if (_IE && !self.designMode) {
 					return;
 				}
@@ -5575,6 +6155,7 @@ _plugin('core', function(K) {
 			}
 		});
 	}
+	// undo, redo
 	_each('undo,redo'.split(','), function(i, name) {
 		if (shortcutKeys[name]) {
 			self.afterCreate(function() {
@@ -5587,6 +6168,7 @@ _plugin('core', function(K) {
 			self[name]();
 		});
 	});
+	// formatblock
 	self.clickToolbar('formatblock', function() {
 		var blocks = self.lang('formatblock.formatBlock'),
 			heights = {
@@ -5616,6 +6198,7 @@ _plugin('core', function(K) {
 			});
 		});
 	});
+	// fontname
 	self.clickToolbar('fontname', function() {
 		var curVal = self.cmd.val('fontname'),
 			menu = self.createMenu({
@@ -5632,6 +6215,7 @@ _plugin('core', function(K) {
 			});
 		});
 	});
+	// fontsize
 	self.clickToolbar('fontsize', function() {
 		var curVal = self.cmd.val('fontsize'),
 			menu = self.createMenu({
@@ -5649,6 +6233,7 @@ _plugin('core', function(K) {
 			});
 		});
 	});
+	// forecolor,hilitecolor
 	_each('forecolor,hilitecolor'.split(','), function(i, name) {
 		self.clickToolbar(name, function() {
 			self.createMenu({
@@ -5661,6 +6246,7 @@ _plugin('core', function(K) {
 			});
 		});
 	});
+	// cut,copy,paste
 	_each(('cut,copy,paste').split(','), function(i, name) {
 		self.clickToolbar(name, function() {
 			self.focus();
@@ -5671,6 +6257,7 @@ _plugin('core', function(K) {
 			}
 		});
 	});
+	// about
 	self.clickToolbar('about', function() {
 		var html = '<div style="margin:20px;">' +
 			'<div>KindEditor ' + _VERSION + '</div>' +
@@ -5683,6 +6270,7 @@ _plugin('core', function(K) {
 			body : html
 		});
 	});
+	// link,image,flash,media,anchor
 	self.plugin.getSelectedLink = function() {
 		return self.cmd.commonAncestor('a');
 	};
@@ -5724,6 +6312,7 @@ _plugin('core', function(K) {
 		});
 		self.addContextmenu({ title : '-' });
 	});
+	// table
 	self.plugin.getSelectedTable = function() {
 		return self.cmd.commonAncestor('table');
 	};
@@ -5750,6 +6339,7 @@ _plugin('core', function(K) {
 		});
 	});
 	self.addContextmenu({ title : '-' });
+	// other
 	_each(('selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,' +
 		'insertunorderedlist,indent,outdent,subscript,superscript,hr,print,' +
 		'bold,italic,underline,strikethrough,removeformat,unlink').split(','), function(i, name) {
@@ -5765,6 +6355,7 @@ _plugin('core', function(K) {
 			self.focus().exec(name, null);
 		});
 	});
+	// paste
 	self.afterCreate(function() {
 		var doc = self.edit.doc, cmd, bookmark, div,
 			cls = '__kindeditor_paste__', pasting = false;
@@ -5777,6 +6368,7 @@ _plugin('core', function(K) {
 				});
 				K('span.Apple-style-span', div).remove(true);
 				K('span.Apple-tab-span', div).remove(true);
+				// Bugfix: https://github.com/kindsoft/kindeditor/issues/8
 				K('span[style]', div).each(function() {
 					if (K(this).css('white-space') == 'nowrap') {
 						K(this).remove(true);
@@ -5789,11 +6381,15 @@ _plugin('core', function(K) {
 			if (html === '') {
 				return;
 			}
+			// Chrome纯文本粘贴问题
 			if (_WEBKIT) {
 				html = html.replace(/(<br>)\1/ig, '$1');
 			}
+			// paste HTML
 			if (self.pasteType === 2) {
+				// 去除内容为空的p标签
 				html = html.replace(/(<(?:p|p\s[^>]*)>) *(<\/p>)/ig, '');
+				// paste from ms word
 				if (/schemas-microsoft-com|worddocument|mso-\w+/i.test(html)) {
 					html = _clearMsWord(html, self.filterMode ? self.htmlTags : K.options.htmlTags);
 				} else {
@@ -5801,6 +6397,7 @@ _plugin('core', function(K) {
 					html = self.beforeSetHtml(html);
 				}
 			}
+			// paste text
 			if (self.pasteType === 1) {
 				html = html.replace(/&nbsp;/ig, ' ');
 				html = html.replace(/\n\s*\n/g, '\n');
@@ -5842,13 +6439,20 @@ _plugin('core', function(K) {
 			K(doc.body).append(div);
 			if (_IE) {
 				var rng = cmd.range.get(true);
-				rng.moveToElementText(div[0]);
-				rng.select();
-				rng.execCommand('paste');
-				e.preventDefault();
+			    try {
+					rng.moveToElementText(div[0]);
+					rng.select();
+					rng.execCommand('paste');
+					e.preventDefault();
+			    } 
+			    catch (e) {
+					return false;
+			    }
 			} else {
 				cmd.range.selectNodeContents(div[0]);
 				cmd.select();
+				div[0].tabIndex = -1;
+				div[0].focus();
 			}
 			setTimeout(function() {
 				movePastedData();
@@ -5856,11 +6460,14 @@ _plugin('core', function(K) {
 			}, 0);
 		});
 	});
+	// 取得HTML前执行
 	self.beforeGetHtml(function(html) {
+		// Bugifx : https://github.com/kindsoft/kindeditor/issues/66
 		if (_IE && _V <= 8) {
 			html = html.replace(/<div\s+[^>]*data-ke-input-tag="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function(full, tag) {
 				return unescape(tag);
 			});
+			// Bugfix: https://github.com/kindsoft/kindeditor/issues/88
 			html = html.replace(/(<input)((?:\s+[^>]*)?>)/ig, function($0, $1, $2) {
 				if (!/\s+type="[^"]+"/i.test($0)) {
 					return $1 + ' type="text"' + $2;
@@ -5908,7 +6515,9 @@ _plugin('core', function(K) {
 			return start + end;
 		});
 	});
+	// 设置HTML前执行
 	self.beforeSetHtml(function(html) {
+		// Bugifx : https://github.com/kindsoft/kindeditor/issues/66
 		if (_IE && _V <= 8) {
 			html = html.replace(/<input[^>]*>|<(select|button)[^>]*>[\s\S]*?<\/\1>/ig, function(full) {
 				var attrs = _getAttrList(full);
@@ -5957,4 +6566,6 @@ _plugin('core', function(K) {
 		});
 	});
 });
+
+
 })(window);
