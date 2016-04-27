@@ -113,6 +113,7 @@ KindEditor.lang({
 	'wordpaste.comment' : 'Use keyboard shortcut(Ctrl+V) to paste the text into the window.',
 	'code.pleaseInput' : 'Please input code.',
 	'link.url' : 'URL',
+	'link.linkTitle' : 'linkTitle',
 	'link.linkType' : 'Target',
 	'link.newWindow' : 'New window',
 	'link.selfWindow' : 'Same window',

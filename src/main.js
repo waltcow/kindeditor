@@ -1494,13 +1494,20 @@ _plugin('core', function(K) {
 			K(doc.body).append(div);
 			if (_IE) {
 				var rng = cmd.range.get(true);
-				rng.moveToElementText(div[0]);
-				rng.select();
-				rng.execCommand('paste');
-				e.preventDefault();
+				try {
+					rng.moveToElementText(div[0]);
+					rng.select();
+					rng.execCommand('paste');
+					e.preventDefault();
+				}
+				catch (e) {
+					return false;
+				}
 			} else {
 				cmd.range.selectNodeContents(div[0]);
 				cmd.select();
+				div[0].tabIndex = -1;
+				div[0].focus();
 			}
 			setTimeout(function() {
 				movePastedData();
