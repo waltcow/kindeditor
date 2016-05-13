@@ -776,7 +776,7 @@ _extend(KCmd, {
 			range.selectNode(a.get());
 			self.select();
 		}
-		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '" title="' + _escape(title) + '"';
+		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '"' + 'onclick=window.open("' + _escape(url) + '")' + ' title="' + _escape(url) + '"';
 		if (type) {
 			html += ' target="' + _escape(type) + '"';
 		}

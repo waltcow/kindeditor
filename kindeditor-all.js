@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.1.11 (2016-04-27)
+* @version 4.1.11 (2016-05-13)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.1.11 (2016-04-27)',
+var _VERSION = '4.1.11 (2016-05-13)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -3291,7 +3291,7 @@ _extend(KCmd, {
 			range.selectNode(a.get());
 			self.select();
 		}
-		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '" title="' + _escape(title) + '"';
+		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '"' + 'onclick=window.open("' + _escape(url) + '")' + ' title="' + _escape(url) + '"';
 		if (type) {
 			html += ' target="' + _escape(type) + '"';
 		}
