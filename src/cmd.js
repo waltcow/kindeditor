@@ -768,7 +768,7 @@ _extend(KCmd, {
 		html += '/>';
 		return this.inserthtml(html);
 	},
-	createlink : function(url, type) {
+	createlink : function(title, url, type) {
 		var self = this, doc = self.doc, range = self.range;
 		self.select();
 		var a = self.commonNode({ a : '*' });
@@ -776,12 +776,12 @@ _extend(KCmd, {
 			range.selectNode(a.get());
 			self.select();
 		}
-		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '" ';
+		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '"' + 'onclick=window.open("' + _escape(url) + '")' + ' title="' + _escape(url) + '"';
 		if (type) {
 			html += ' target="' + _escape(type) + '"';
 		}
 		if (range.collapsed) {
-			html += '>' + _escape(url) + '</a>';
+			html += '>' + _escape(title) + '</a>';
 			return self.inserthtml(html);
 		}
 		if (range.isControl()) {
@@ -792,28 +792,26 @@ _extend(KCmd, {
 			range.selectNode(node[0]);
 			return self.select();
 		}
-		function setAttr(node, url, type) {
-			K(node).attr('href', url).attr('data-ke-src', url);
+		function setAttr(node, url, type, title) {
+			K(node).attr('href', url).attr('data-ke-src', url).attr('title', title);
 			if (type) {
 				K(node).attr('target', type);
 			} else {
 				K(node).removeAttr('target');
 			}
 		}
-		// Bugfix: https://github.com/kindsoft/kindeditor/issues/117
-		// [IE] 当两个A标签并排在一起中间没有别的内容，修改后面的链接地址时，前面的链接地址也被改掉。
 		var sc = range.startContainer, so = range.startOffset,
-			ec = range.endContainer, eo = range.endOffset;
+				ec = range.endContainer, eo = range.endOffset;
 		if (sc.nodeType == 1 && sc === ec && so + 1 === eo) {
 			var child = sc.childNodes[so];
 			if (child.nodeName.toLowerCase() == 'a') {
-				setAttr(child, url, type);
+				setAttr(child, url, type, '');
 				return self;
 			}
 		}
 		_nativeCommand(doc, 'createlink', '__kindeditor_temp_url__');
 		K('a[href="__kindeditor_temp_url__"]', doc).each(function() {
-			setAttr(this, url, type);
+			setAttr(this, url, type, title);
 		});
 		return self;
 	},
