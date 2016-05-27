@@ -776,7 +776,7 @@ _extend(KCmd, {
 			range.selectNode(a.get());
 			self.select();
 		}
-		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '"' + 'onclick=window.open("' + _escape(url) + '")' + ' title="' + _escape(url) + '"';
+		var html = '<a href="' + _escape(url) + '" data-ke-src="' + _escape(url) + '"' + 'onclick=window.open(this.href)' + ' title="' + _escape(url) + '"';
 		if (type) {
 			html += ' target="' + _escape(type) + '"';
 		}
@@ -792,8 +792,11 @@ _extend(KCmd, {
 			range.selectNode(node[0]);
 			return self.select();
 		}
-		function setAttr(node, url, type, title) {
-			K(node).attr('href', url).attr('data-ke-src', url).attr('title', title);
+		function setAttr(node, url, type, title, modify) {
+			K(node).attr('href', url).attr('data-ke-src', url).attr('title', _escape(url));
+			if (modify) {
+				K(node).html(_escape(title));
+			}
 			if (type) {
 				K(node).attr('target', type);
 			} else {
