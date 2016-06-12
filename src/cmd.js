@@ -808,7 +808,7 @@ _extend(KCmd, {
 		if (sc.nodeType == 1 && sc === ec && so + 1 === eo) {
 			var child = sc.childNodes[so];
 			if (child.nodeName.toLowerCase() == 'a') {
-				setAttr(child, url, type, '');
+				setAttr(child, url, type, title, true);
 				return self;
 			}
 		}
